@@ -19,7 +19,10 @@ const script = Mr_Dafoe({
 
 export const metadata: Metadata = {
   title: "Superstar Travels Tours | Explore Sri Lanka",
-  description: "Discover Sri Lanka with memorable guided tours and travel experiences."
+  description: "Discover Sri Lanka with memorable guided tours and travel experiences.",
+  icons: {
+    icon: "/favicon.ico?v=2"
+  }
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
