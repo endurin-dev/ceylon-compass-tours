@@ -1,0 +1,66 @@
+.button,
+.telegramButton {
+  position: fixed;
+  right: max(18px, env(safe-area-inset-right));
+  z-index: 45;
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background .16s ease, box-shadow .16s ease, transform .16s ease;
+}
+
+.button {
+  bottom: max(18px, env(safe-area-inset-bottom));
+  border: 1px solid rgba(4, 66, 35, .14);
+  background: #25d366;
+  box-shadow: 0 8px 22px rgba(9, 67, 38, .24);
+  color: #063b24;
+}
+
+.telegramButton {
+  bottom: calc(max(18px, env(safe-area-inset-bottom)) + 56px);
+  border: 1px solid rgba(4, 61, 105, .2);
+  background: #0879b8;
+  box-shadow: 0 8px 22px rgba(8, 74, 120, .25);
+  color: #fff;
+}
+
+.button:hover,
+.telegramButton:hover {
+  transform: translateY(-2px);
+}
+
+.button:hover {
+  background: #1fc15d;
+  box-shadow: 0 12px 26px rgba(9, 67, 38, .3);
+}
+
+.telegramButton:hover {
+  background: #05659c;
+  box-shadow: 0 12px 26px rgba(8, 74, 120, .32);
+}
+
+.button:focus-visible,
+.telegramButton:focus-visible {
+  outline: 3px solid #0b5b39;
+  outline-offset: 4px;
+}
+
+@media (max-width: 600px) {
+  .button,
+  .telegramButton {
+    width: 44px;
+    height: 44px;
+    padding: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .telegramButton { transition: none; }
+}

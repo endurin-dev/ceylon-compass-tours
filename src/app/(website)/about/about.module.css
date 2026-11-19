@@ -1,0 +1,702 @@
+/* Design tokens */
+.page {
+  --red: #d7121c;
+  --red-dark: #b00d16;
+  --red-tint: #fdeeee;
+  --navy: #0d2a5c;
+  --ink: #16213e;
+  --muted: #5b6577;
+  --line: #e7eaf0;
+  --surface: #ffffff;
+
+  font-family: var(--font-body), system-ui, sans-serif;
+  color: var(--ink);
+  background: var(--surface);
+  line-height: 1.6;
+  overflow-x: clip;
+}
+
+.page *,
+.page *::before,
+.page *::after {
+  box-sizing: border-box;
+}
+
+.page a:focus-visible {
+  outline: 3px solid #1b6fe0;
+  outline-offset: 2px;
+}
+
+.container {
+  width: min(1180px, 100% - 40px);
+  margin-inline: auto;
+}
+
+/* ───────── Hero ───────── */
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  color: #fff;
+  padding: 56px 0 96px;
+  background: linear-gradient(135deg, #0b3a4a 0%, #1d6a4c 55%, #4f9a5a 100%);
+}
+
+.heroPhoto {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+}
+
+.heroPhoto img {
+  object-fit: cover;
+  object-position: center 55%;
+}
+
+.heroShade {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(
+    100deg,
+    rgba(8, 36, 52, 0.88) 0%,
+    rgba(8, 36, 52, 0.55) 55%,
+    rgba(8, 36, 52, 0.28) 100%
+  );
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  left: -8%;
+  right: -8%;
+  bottom: -1px;
+  height: 90px;
+  background: var(--surface);
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+  width: min(1180px, 100% - 40px);
+  margin-inline: auto;
+}
+
+.locationPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
+.locationPill svg {
+  color: var(--red);
+}
+
+.heroInner h1 {
+  margin: 18px 0 14px;
+  font-size: clamp(2.2rem, 5vw, 3.7rem);
+  font-weight: 800;
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+}
+
+.heroInner p {
+  margin: 0;
+  max-width: 52ch;
+  font-size: 1.08rem;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.heroScript {
+  display: block;
+  margin-top: 34px;
+  font-family: var(--font-script), cursive;
+  font-size: clamp(1.6rem, 3vw, 2.3rem);
+  transform: rotate(-4deg);
+  transform-origin: left;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* ───────── Tabs ───────── */
+.tabs {
+  position: relative;
+  z-index: 2;
+  width: fit-content;
+  max-width: calc(100% - 40px);
+  margin: -34px auto 0 max(20px, calc((100% - 1180px) / 2));
+  display: flex;
+  gap: 4px;
+  padding: 6px;
+  background: #fff;
+  border-radius: 999px;
+  box-shadow: 0 6px 22px rgba(13, 42, 92, 0.12);
+  overflow-x: auto;
+}
+
+.tabs a {
+  white-space: nowrap;
+  padding: 9px 20px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.tabs a:hover {
+  background: var(--red-tint);
+}
+
+.tabs .tabActive {
+  background: var(--red);
+  color: #fff;
+}
+
+/* ───────── Shared ───────── */
+.section {
+  padding-top: 64px;
+  scroll-margin-top: 24px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 6px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.eyebrow i {
+  display: block;
+  width: 30px;
+  height: 3px;
+  background: var(--red);
+  border-radius: 2px;
+}
+
+.sectionTitle {
+  margin: 0 0 22px;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  color: var(--navy);
+  max-width: 24ch;
+}
+
+.icon {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--red-tint);
+  color: var(--red);
+}
+
+.btnPrimary,
+.btnOutline,
+.btnGhost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  padding: 13px 26px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.btnPrimary {
+  background: var(--red);
+  color: #fff;
+}
+
+.btnPrimary:hover {
+  background: var(--red-dark);
+}
+
+.btnOutline {
+  border: 2px solid var(--red);
+  color: var(--red);
+  padding: 11px 24px;
+}
+
+.btnOutline:hover {
+  background: var(--red);
+  color: #fff;
+}
+
+.btnGhost {
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  color: #fff;
+  padding: 11px 24px;
+}
+
+.btnGhost:hover {
+  background: #fff;
+  color: var(--navy);
+}
+
+/* ───────── Story ───────── */
+.story {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 48px;
+  align-items: center;
+}
+
+.storyText p {
+  margin: 0 0 14px;
+  color: var(--muted);
+  max-width: 58ch;
+}
+
+.highlights {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.highlights li {
+  display: grid;
+  justify-items: center;
+  gap: 10px;
+  text-align: center;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0 4px;
+}
+
+.highlights li + li {
+  border-left: 1px solid var(--line);
+}
+
+/* photo collage (reference: tilted polaroid frames) */
+.collage {
+  position: relative;
+  min-height: 420px;
+}
+
+.photo {
+  position: absolute;
+  width: 56%;
+  aspect-ratio: 4 / 3;
+  border: 8px solid #fff;
+  border-radius: 6px;
+  box-shadow: 0 14px 30px rgba(13, 42, 92, 0.2);
+  background-size: cover;
+  background-position: center;
+}
+
+.photo img {
+  object-fit: cover;
+}
+
+.photoA {
+  top: 0;
+  left: 0;
+  transform: rotate(-6deg);
+  background-image: url("/images/about/story-1.jpg"),
+    linear-gradient(135deg, #2a7a8c, #6bb7a0);
+}
+
+.photoB {
+  top: 70px;
+  right: 0;
+  transform: rotate(5deg);
+  background-image: url("/images/about/story-2.jpg"),
+    linear-gradient(135deg, #1d6a4c, #8cc56a);
+}
+
+.photoC {
+  bottom: 0;
+  left: 14%;
+  transform: rotate(-2deg);
+  background-image: url("/images/about/story-3.jpg"),
+    linear-gradient(135deg, #8a6a2d, #d6b45f);
+}
+
+.collageScript {
+  position: absolute;
+  right: 4%;
+  bottom: 6%;
+  font-family: var(--font-script), cursive;
+  font-size: 1.6rem;
+  color: var(--navy);
+  transform: rotate(-5deg);
+}
+
+/* ───────── Services ───────── */
+.cards4 {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 26px;
+}
+
+.card .icon {
+  margin-bottom: 16px;
+}
+
+.card h3 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.card p {
+  margin: 0;
+  font-size: 0.93rem;
+  color: var(--muted);
+}
+
+/* ───────── Values ───────── */
+.valueList {
+  position: relative;
+  display: grid;
+  gap: 16px;
+  max-width: 760px;
+  padding-left: 28px;
+}
+
+.valueList::before {
+  content: "";
+  position: absolute;
+  left: 7px;
+  top: 16px;
+  bottom: 16px;
+  border-left: 2px dashed var(--red);
+}
+
+.value {
+  position: relative;
+  display: flex;
+  gap: 18px;
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 20px 22px;
+}
+
+.value::before {
+  content: "";
+  position: absolute;
+  left: -28px;
+  top: 26px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  border: 3px solid var(--red);
+}
+
+.valueIcon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--red-tint);
+  color: var(--red);
+}
+
+.value h3 {
+  margin: 0 0 2px;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.value p {
+  margin: 0;
+  font-size: 0.93rem;
+  color: var(--muted);
+}
+
+/* ───────── Why us + Find us ───────── */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+
+.helpCard {
+  background: var(--red-tint);
+  border-radius: 18px;
+  padding: 32px;
+}
+
+.helpCard h2,
+.infoCard h2 {
+  margin: 0 0 18px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.helpCard ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.helpCard li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.97rem;
+}
+
+.helpCard li svg {
+  flex: none;
+  margin-top: 4px;
+  color: var(--red);
+}
+
+.infoCard {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 32px;
+  display: grid;
+  align-content: start;
+  gap: 4px;
+}
+
+.infoCard dl {
+  margin: 0 0 20px;
+  display: grid;
+  gap: 16px;
+}
+
+.infoCard dl > div {
+  display: flex;
+  gap: 14px;
+}
+
+.infoCard dt {
+  color: var(--navy);
+  padding-top: 2px;
+}
+
+.infoCard dd {
+  margin: 0;
+  display: grid;
+  gap: 2px;
+  font-size: 0.93rem;
+  color: var(--muted);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.infoCard dd strong {
+  color: var(--ink);
+}
+
+.infoCard .btnOutline {
+  justify-self: start;
+}
+
+/* ───────── Destination tiles ───────── */
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.tile {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 220px;
+  border-radius: 14px;
+  overflow: hidden;
+  color: #fff;
+  text-decoration: none;
+  background-size: cover;
+  background-position: center;
+}
+
+.tile img {
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.tile:hover img {
+  transform: scale(1.05);
+}
+
+.tile::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(to top, rgba(8, 20, 40, 0.8), rgba(8, 20, 40, 0) 60%);
+}
+
+.tile:hover::before {
+  background: linear-gradient(to top, rgba(215, 18, 28, 0.75), rgba(8, 20, 40, 0) 65%);
+}
+
+.tileLabel {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 2px;
+  padding: 16px;
+}
+
+.tileLabel strong {
+  font-size: 1.1rem;
+}
+
+.tileLabel small {
+  font-size: 0.8rem;
+  opacity: 0.92;
+}
+
+.tileSigiriya {
+  background-image: url("/images/about/sigiriya.jpg"),
+    linear-gradient(135deg, #6a4a2a, #c08a4a);
+}
+
+.tileKandy {
+  background-image: url("/images/about/kandy.jpg"),
+    linear-gradient(135deg, #7a5a1c, #e0b44a);
+}
+
+.tileElla {
+  background-image: url("/images/about/ella.jpg"),
+    linear-gradient(135deg, #1d6a4c, #7cc07a);
+}
+
+.tileGalle {
+  background-image: url("/images/about/galle.jpg"),
+    linear-gradient(135deg, #1f7a9a, #7fd0d6);
+}
+
+/* ───────── CTA ───────── */
+.banner {
+  margin: 64px 0 56px;
+  border-radius: 22px;
+  padding: 44px 48px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  background:
+    linear-gradient(95deg, rgba(10, 31, 69, 0.96) 0%, rgba(10, 31, 69, 0.82) 60%, rgba(10, 31, 69, 0.55) 100%),
+    url("/images/about/cta.jpg") center / cover no-repeat,
+    linear-gradient(120deg, #0d2a5c, #c4571c);
+}
+
+.bannerScript {
+  display: block;
+  font-family: var(--font-script), cursive;
+  font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+  line-height: 1.2;
+  margin-bottom: 8px;
+  transform: rotate(-2deg);
+  transform-origin: left;
+}
+
+.banner p {
+  margin: 0;
+  max-width: 44ch;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.bannerActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  flex: none;
+}
+
+/* ───────── Responsive ───────── */
+@media (max-width: 1024px) {
+  .story,
+  .split {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .cards4,
+  .tiles {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .collage {
+    min-height: 380px;
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 38px 0 82px;
+  }
+
+  .tabs {
+    margin-left: 20px;
+  }
+
+  .highlights {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    row-gap: 20px;
+  }
+
+  .highlights li + li {
+    border-left: 0;
+  }
+
+  .cards4,
+  .tiles {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .helpCard,
+  .infoCard {
+    padding: 24px 20px;
+  }
+
+  .banner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 32px 24px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .btnPrimary,
+  .btnOutline,
+  .btnGhost {
+    transition: none;
+  }
+}

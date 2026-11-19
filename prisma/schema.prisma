@@ -1,0 +1,396 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum TourStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum BookingStatus {
+  PENDING
+  REQUESTED
+  AWAITING_PAYMENT
+  PARTIALLY_PAID
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  PENDING
+  PROCESSING
+  SUCCEEDED
+  FAILED
+  PARTIALLY_REFUNDED
+  REFUNDED
+}
+
+enum PaymentMethod {
+  ONLINE
+  BANK_TRANSFER
+  CASH
+  OTHER
+}
+
+enum UserRole {
+  SUPER_ADMIN
+  TOUR_MANAGER
+  BOOKING_MANAGER
+  FINANCE_MANAGER
+  CONTENT_MANAGER
+  SUPPORT
+}
+
+model User {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         UserRole @default(SUPPORT)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Customer {
+  id        String    @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String
+  phone     String?
+  country   String?
+  bookings  Booking[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([email])
+}
+
+model Tour {
+  id               String            @id @default(cuid())
+  title            String
+  slug             String            @unique
+  shortDescription String
+  description      String            @db.Text
+  durationDays     Int
+  durationNights   Int
+  durationLabel    String?
+  status           TourStatus        @default(DRAFT)
+  featured         Boolean           @default(false)
+  showPrice        Boolean           @default(true)
+  coverImageUrl    String?
+  heroImageUrl     String?
+  basePrice        Decimal           @db.Decimal(12, 2)
+  currency         String            @default("USD")
+  seoTitle         String?
+  seoDescription   String?
+  images           TourImage[]
+  itineraryDays    ItineraryDay[]
+  tourDestinations TourDestination[]
+  tourAttractions  TourAttraction[]
+  tourActivities   TourActivity[]
+  prices           TourPrice[]
+  departures       TourDeparture[]
+  inclusions       TourInclusion[]
+  exclusions       TourExclusion[]
+  bookings         Booking[]
+  reviews          Review[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  @@index([status, featured])
+}
+
+model TourImage {
+  id        String   @id @default(cuid())
+  tourId    String
+  tour      Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  url       String
+  publicId  String?
+  altText   String?
+  caption   String?
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+
+  @@index([tourId, sortOrder])
+}
+
+model Destination {
+  id               String            @id @default(cuid())
+  name             String
+  slug             String            @unique
+  description      String?           @db.Text
+  imageUrl         String?
+  latitude         Decimal?          @db.Decimal(10, 7)
+  longitude        Decimal?          @db.Decimal(10, 7)
+  tourDestinations TourDestination[]
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+}
+
+model Attraction {
+  id              String           @id @default(cuid())
+  name            String
+  slug            String           @unique
+  description     String?          @db.Text
+  imageUrl        String?
+  tourAttractions TourAttraction[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model Activity {
+  id             String         @id @default(cuid())
+  name           String
+  slug           String         @unique
+  description    String?        @db.Text
+  imageUrl       String?
+  tourActivities TourActivity[]
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+}
+
+model TourDestination {
+  tourId        String
+  destinationId String
+  sortOrder     Int         @default(0)
+  tour          Tour        @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  destination   Destination @relation(fields: [destinationId], references: [id], onDelete: Cascade)
+
+  @@id([tourId, destinationId])
+  @@index([destinationId])
+}
+
+model TourAttraction {
+  tourId       String
+  attractionId String
+  sortOrder    Int        @default(0)
+  tour         Tour       @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  attraction   Attraction @relation(fields: [attractionId], references: [id], onDelete: Cascade)
+
+  @@id([tourId, attractionId])
+  @@index([attractionId])
+}
+
+model TourActivity {
+  tourId     String
+  activityId String
+  sortOrder  Int      @default(0)
+  tour       Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  activity   Activity @relation(fields: [activityId], references: [id], onDelete: Cascade)
+
+  @@id([tourId, activityId])
+  @@index([activityId])
+}
+
+model ItineraryDay {
+  id             String              @id @default(cuid())
+  tourId         String
+  tour           Tour                @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  dayNumber      Int
+  title          String
+  description    String              @db.Text
+  distanceKm     Decimal?            @db.Decimal(8, 2)
+  drivingMinutes Int?
+  overnightAt    String?
+  accommodation  String?
+  meals          String[]            @default([])
+  activities     ItineraryActivity[]
+  createdAt      DateTime            @default(now())
+
+  @@unique([tourId, dayNumber])
+  @@index([tourId, dayNumber])
+}
+
+model ItineraryActivity {
+  id          String       @id @default(cuid())
+  dayId       String
+  day         ItineraryDay @relation(fields: [dayId], references: [id], onDelete: Cascade)
+  timeLabel   String?
+  title       String
+  description String       @db.Text
+  imageUrl    String?
+  sortOrder   Int          @default(0)
+}
+
+model TourPrice {
+  id               String    @id @default(cuid())
+  tourId           String
+  tour             Tour      @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  label            String
+  adultPrice       Decimal   @db.Decimal(12, 2)
+  childPrice       Decimal?  @db.Decimal(12, 2)
+  infantPrice      Decimal?  @db.Decimal(12, 2)
+  singleSupplement Decimal?  @db.Decimal(12, 2)
+  privateTourPrice Decimal?  @db.Decimal(12, 2)
+  currency         String    @default("USD")
+  validFrom        DateTime?
+  validUntil       DateTime?
+}
+
+model TourDeparture {
+  id          String    @id @default(cuid())
+  tourId      String
+  tour        Tour      @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  startDate   DateTime
+  endDate     DateTime
+  capacity    Int?
+  bookedSeats Int       @default(0)
+  active      Boolean   @default(true)
+  bookings    Booking[]
+
+  @@index([tourId, startDate, active])
+}
+
+model TourInclusion {
+  id        String @id @default(cuid())
+  tourId    String
+  tour      Tour   @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  label     String
+  sortOrder Int    @default(0)
+}
+
+model TourExclusion {
+  id        String @id @default(cuid())
+  tourId    String
+  tour      Tour   @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  label     String
+  sortOrder Int    @default(0)
+}
+
+model Booking {
+  id                String                 @id @default(cuid())
+  reference         String                 @unique
+  tourId            String
+  tour              Tour                   @relation(fields: [tourId], references: [id])
+  customerId        String
+  customer          Customer               @relation(fields: [customerId], references: [id])
+  departureId       String?
+  departure         TourDeparture?         @relation(fields: [departureId], references: [id], onDelete: SetNull)
+  status            BookingStatus          @default(PENDING)
+  paymentStatus     PaymentStatus          @default(PENDING)
+  paymentMethod     PaymentMethod?
+  bookingOption     String
+  travelStartDate   DateTime?
+  travelEndDate     DateTime?
+  adults            Int                    @default(1)
+  children          Int                    @default(0)
+  infants           Int                    @default(0)
+  currency          String                 @default("USD")
+  subtotal          Decimal                @db.Decimal(12, 2)
+  discountAmount    Decimal                @default(0) @db.Decimal(12, 2)
+  totalAmount       Decimal                @db.Decimal(12, 2)
+  amountPaid        Decimal                @default(0) @db.Decimal(12, 2)
+  tourTitleSnapshot String
+  priceSnapshot     Json
+  specialRequests   String?                @db.Text
+  travellers        BookingTraveller[]
+  payments          BookingPayment[]
+  statusHistory     BookingStatusHistory[]
+  createdAt         DateTime               @default(now())
+  updatedAt         DateTime               @updatedAt
+
+  @@index([status, createdAt])
+  @@index([customerId])
+}
+
+model BookingTraveller {
+  id            String    @id @default(cuid())
+  bookingId     String
+  booking       Booking   @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  firstName     String
+  lastName      String
+  travellerType String
+  nationality   String?
+  dateOfBirth   DateTime?
+}
+
+model BookingPayment {
+  id                String        @id @default(cuid())
+  bookingId         String
+  booking           Booking       @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  amount            Decimal       @db.Decimal(12, 2)
+  currency          String        @default("USD")
+  status            PaymentStatus @default(PENDING)
+  method            PaymentMethod
+  provider          String?
+  providerReference String?
+  idempotencyKey    String?       @unique
+  paidAt            DateTime?
+  createdAt         DateTime      @default(now())
+}
+
+model BookingStatusHistory {
+  id         String         @id @default(cuid())
+  bookingId  String
+  booking    Booking        @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+  fromStatus BookingStatus?
+  toStatus   BookingStatus
+  note       String?
+  changedBy  String?
+  createdAt  DateTime       @default(now())
+}
+
+model Review {
+  id           String   @id @default(cuid())
+  tourId       String
+  tour         Tour     @relation(fields: [tourId], references: [id], onDelete: Cascade)
+  customerName String
+  rating       Int
+  title        String?
+  body         String   @db.Text
+  approved     Boolean  @default(false)
+  createdAt    DateTime @default(now())
+
+  @@index([tourId, approved])
+}
+
+model Media {
+  id        String   @id @default(cuid())
+  url       String
+  publicId  String?  @unique
+  filename  String
+  mimeType  String
+  sizeBytes Int
+  altText   String?
+  folder    String?
+  createdAt DateTime @default(now())
+}
+
+model Enquiry {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  phone     String?
+  country   String?
+  message   String   @db.Text
+  status    String   @default("NEW")
+  createdAt DateTime @default(now())
+}
+
+model Coupon {
+  id            String    @id @default(cuid())
+  code          String    @unique
+  discountType  String
+  discountValue Decimal   @db.Decimal(12, 2)
+  active        Boolean   @default(true)
+  startsAt      DateTime?
+  expiresAt     DateTime?
+  usageLimit    Int?
+  usageCount    Int       @default(0)
+}
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+}

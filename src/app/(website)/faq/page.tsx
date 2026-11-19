@@ -1,0 +1,1 @@
+export default function FAQPage() { return <main className="container section"><h1 className="section-title">Frequently Asked Questions</h1><p className="muted">Manage questions and answers from the admin panel.</p></main>; }

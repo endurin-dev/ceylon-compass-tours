@@ -1,0 +1,12 @@
+node_modules
+.next
+.next-dev
+out
+dist
+public/uploads/
+.env
+.env.local
+.env.*.local
+coverage
+*.log
+.DS_Store

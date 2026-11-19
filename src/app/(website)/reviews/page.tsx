@@ -1,0 +1,1 @@
+export default function ReviewsPage() { return <main className="container section"><h1 className="section-title">Traveller Reviews</h1><p className="muted">Approved customer reviews will appear here.</p></main>; }
