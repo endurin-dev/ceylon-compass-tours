@@ -1029,13 +1029,13 @@ html[data-theme="light"] .admin-shell .admin-main select option { background: #f
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 40px 24px;
+  padding: 28px 24px;
 }
 
 .admin-login__card {
   width: 100%;
   max-width: 440px;
-  padding: 40px 36px;
+  padding: 28px 32px;
   background: #fff;
   border-radius: 20px;
   border: 1px solid #e6eaf2;
@@ -1043,42 +1043,55 @@ html[data-theme="light"] .admin-shell .admin-main select option { background: #f
 }
 
 .admin-login__lock {
-  width: 52px;
-  height: 52px;
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
-  margin-bottom: 18px;
-  font-size: 1.4rem;
-  border-radius: 14px;
+  margin-bottom: 12px;
+  font-size: 1.2rem;
+  border-radius: 12px;
   background: #eef2fb;
 }
 
 .admin-login__card h2 {
   margin: 0 0 8px;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   color: var(--navy, #0b2545);
 }
 
 .admin-login__sub {
-  margin: 0 0 24px;
-  font-size: 0.95rem;
-  line-height: 1.55;
+  margin: 0 0 16px;
+  font-size: 0.88rem;
+  line-height: 1.45;
   color: #6b7587;
+}
+
+.admin-login__form {
+  gap: 4px;
+}
+
+.admin-login__form input {
+  padding: 7px 10px;
+}
+
+.admin-login__form button {
+  min-height: 38px;
+  padding-block: 7px;
 }
 
 .admin-login__divider {
   height: 1px;
-  margin: 28px 0 20px;
+  margin: 18px 0 12px;
   background: #e9edf4;
 }
 
 .admin-login__notes {
   list-style: none;
   padding: 0;
-  margin: 0 0 20px;
+  margin: 0 0 14px;
   display: grid;
-  gap: 10px;
-  font-size: 0.85rem;
+  gap: 6px;
+  font-size: 0.78rem;
   color: #6b7587;
 }
 
@@ -1095,7 +1108,7 @@ html[data-theme="light"] .admin-shell .admin-main select option { background: #f
 }
 
 .admin-login__footer {
-  margin-top: 24px;
+  margin-top: 14px;
   font-size: 0.8rem;
   color: #98a2b3;
 }
@@ -1105,11 +1118,38 @@ html[data-theme="light"] .admin-shell .admin-main select option { background: #f
   .admin-login {
     grid-template-columns: 1fr;
   }
-  .admin-login__brand {
-    padding: 40px 24px;
-  }
+  .admin-login__brand { padding: 16px 24px 12px; }
+  .admin-login__headline { margin: 10px 0 6px; font-size: clamp(1.55rem, 6vw, 2.1rem); }
+  .admin-login__lead { margin: 0; font-size: 0.84rem; line-height: 1.4; }
+  .admin-login__panel { padding: 10px 16px 14px; }
+  .admin-login__card { max-width: 420px; padding: 20px 22px; }
+  .admin-login__lock { width: 38px; height: 38px; margin-bottom: 8px; font-size: 1.05rem; }
+  .admin-login__card h2 { margin-bottom: 5px; font-size: 1.35rem; }
+  .admin-login__sub { margin-bottom: 12px; font-size: 0.82rem; }
+  .admin-login__divider { margin: 14px 0 10px; }
+  .admin-login__notes { gap: 5px; margin-bottom: 10px; font-size: 0.72rem; }
+  .admin-login__footer { margin-top: 8px; }
   .admin-login__features,
   .admin-login__stats {
     display: none; /* keep mobile compact */
   }
+}
+
+@media (max-width: 480px) {
+  .admin-login__brand { padding: 12px 18px 10px; }
+  .admin-login__headline { font-size: clamp(1.4rem, 6.3vw, 1.8rem); }
+  .admin-login__lead { font-size: 0.78rem; line-height: 1.35; }
+  .admin-login__panel { padding: 8px 12px 10px; }
+  .admin-login__card { padding: 18px; }
+}
+
+@media (min-width: 901px) and (max-height: 800px) {
+  .admin-login__brand { padding: 32px 40px; }
+  .admin-login__headline { margin: 14px 0 8px; font-size: clamp(1.8rem, 2.8vw, 2.4rem); }
+  .admin-login__lead { margin-bottom: 20px; font-size: 0.95rem; line-height: 1.45; }
+  .admin-login__features { gap: 10px; margin-bottom: 22px; }
+  .admin-login__feature-icon { flex-basis: 38px; height: 38px; }
+  .admin-login__features p { font-size: 0.82rem; }
+  .admin-login__stats { gap: 22px; padding-top: 16px; }
+  .admin-login__stats strong { font-size: 1.25rem; }
 }

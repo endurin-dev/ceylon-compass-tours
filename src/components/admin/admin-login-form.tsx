@@ -34,7 +34,7 @@ export function AdminLoginForm() {
   }
 
   return (
-    <form className="field" onSubmit={handleSubmit}>
+    <form className="field admin-login__form" onSubmit={handleSubmit}>
       <label htmlFor="email">Email</label>
       <input
         id="email"

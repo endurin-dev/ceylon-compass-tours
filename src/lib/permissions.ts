@@ -9,7 +9,7 @@ export async function requirePermission(permission: string) {
   }
 
   const user = session.user as typeof session.user & { id?: string; role?: string };
-  const role = user.role ?? "SUPER_ADMIN";
+  const role = user.role;
 
   if (role !== "SUPER_ADMIN") {
     throw new Error(`Insufficient permissions for ${permission}.`);

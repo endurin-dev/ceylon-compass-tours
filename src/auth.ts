@@ -49,7 +49,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const tokenWithRole = token as typeof token & { role?: string };
 
       if (user) {
-        tokenWithRole.role = (user as { role?: string }).role ?? "SUPER_ADMIN";
+        tokenWithRole.role = (user as { role?: string }).role;
       }
 
       return tokenWithRole;
@@ -59,7 +59,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       const tokenWithRole = token as typeof token & { role?: string };
 
       sessionUser.id = token.sub ?? sessionUser.email ?? "admin";
-      sessionUser.role = tokenWithRole.role ?? "SUPER_ADMIN";
+      sessionUser.role = tokenWithRole.role;
 
       return { ...session, user: sessionUser };
     },
