@@ -3,7 +3,6 @@ node_modules
 .next-dev
 out
 dist
-public/uploads/
 .env
 .env.local
 .env.*.local
