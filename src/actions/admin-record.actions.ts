@@ -6,6 +6,7 @@ import { z } from "zod";
 import { requirePermission } from "@/lib/permissions";
 import { prisma } from "@/lib/prisma";
 import { imageUrlSchema } from "@/lib/image-url";
+import { itineraryDaysSchema } from "@/modules/tours/tour.validation";
 
 export type AdminMutationResult = { error?: string; success?: boolean };
 
@@ -84,13 +85,14 @@ export async function updateAdminRecord(
         status: z.enum(["DRAFT", "PUBLISHED", "ARCHIVED"]),
         featured: booleanValue,
         showPrice: booleanValue,
+        itineraryDays: itineraryDaysSchema,
         coverImageUrl: imageUrlSchema,
         destinationIds: destinationIdsValue,
         attractionIds: attractionIdsValue,
         activityIds: activityIdsValue,
       }).safeParse(values);
       if (!parsed.success) return { error: "Check the tour details and try again." };
-      const { destinationIds, attractionIds, activityIds, ...tourData } = parsed.data;
+      const { destinationIds, attractionIds, activityIds, itineraryDays, ...tourData } = parsed.data;
       const [destinations, attractions, activities, existingTour, slugConflict] = await Promise.all([
         prisma.destination.findMany({
           where: { id: { in: destinationIds } },
@@ -159,6 +161,31 @@ export async function updateAdminRecord(
               activityId,
               sortOrder,
             })),
+          });
+        }
+        await transaction.itineraryDay.deleteMany({ where: { tourId: recordId } });
+        for (const [dayIndex, day] of itineraryDays.entries()) {
+          await transaction.itineraryDay.create({
+            data: {
+              tourId: recordId,
+              dayNumber: dayIndex + 1,
+              title: day.title,
+              description: day.description,
+              distanceKm: day.distanceKm,
+              drivingMinutes: day.drivingMinutes,
+              overnightAt: day.overnightAt || null,
+              accommodation: day.accommodation || null,
+              meals: day.meals,
+              activities: {
+                create: day.activities.map((activity, sortOrder) => ({
+                  timeLabel: activity.timeLabel || null,
+                  title: activity.title,
+                  description: activity.description,
+                  imageUrl: activity.imageUrl || null,
+                  sortOrder,
+                })),
+              },
+            },
           });
         }
       });

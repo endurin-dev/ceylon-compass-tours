@@ -5,6 +5,7 @@ import {
 import { createTourAction } from "@/actions/tour.actions";
 import { DestinationPicker } from "@/components/admin/destination-picker";
 import { ImageUrlField } from "@/components/admin/image-url-field";
+import { ItineraryEditor } from "@/components/admin/itinerary-editor";
 import { TourItemPicker } from "@/components/admin/tour-item-picker";
 import { prisma } from "@/lib/prisma";
 import { SlugField } from "../slug-field";
@@ -21,7 +22,12 @@ function CardHead({ Icon, title, sub }: { Icon: typeof Info; title: string; sub?
   );
 }
 
-export default async function NewTourPage() {
+export default async function NewTourPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
+  const { error } = await searchParams;
   const [destinations, attractions, activities] = await Promise.all([
     prisma.destination.findMany({
       select: { id: true, name: true, slug: true, imageUrl: true },
@@ -48,6 +54,12 @@ export default async function NewTourPage() {
         </Link>
       </div>
 
+      {error === "validation" && (
+        <div className="ta-alert" role="alert">
+          Please check the tour details, including the short description and itinerary day titles.
+        </div>
+      )}
+
       <form action={createTourAction}>
         <div className="ta-layout">
           {/* ---------- MAIN COLUMN ---------- */}
@@ -65,7 +77,7 @@ export default async function NewTourPage() {
                 </div>
                 <div className="ta-field ta-span">
                   <label htmlFor="shortDescription" className="req">Short description</label>
-                  <textarea id="shortDescription" name="shortDescription" rows={2} required className="ta-input" placeholder="One or two sentences shown on tour cards" />
+                  <textarea id="shortDescription" name="shortDescription" rows={2} required minLength={10} className="ta-input" placeholder="One or two sentences shown on tour cards (at least 10 characters)" />
                 </div>
               </div>
             </section>
@@ -113,6 +125,13 @@ export default async function NewTourPage() {
                     { name: "activityIds", label: "Activities", items: activities },
                   ]}
                 />
+              </div>
+            </section>
+
+            <section className="ta-card">
+              <CardHead Icon={Route} title="Day-by-day itinerary" sub="Add the daily plan and optional schedule items for guests" />
+              <div className="ta-card-body">
+                <ItineraryEditor />
               </div>
             </section>
 

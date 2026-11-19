@@ -370,12 +370,25 @@ export default async function TourDetailPage({
                           {day.overnightAt && <span className={styles.overnightTag}>Stay · {day.overnightAt}</span>}
                         </div>
                         {day.description && <p>{day.description}</p>}
+                        {(day.accommodation || day.meals.length > 0 || day.distanceKm != null || day.drivingMinutes != null) && (
+                          <p className={styles.dayMeta}>
+                            {[
+                              day.accommodation ? `Stay: ${day.accommodation}` : null,
+                              day.meals.length ? `Meals: ${day.meals.join(", ")}` : null,
+                              day.distanceKm != null ? `${day.distanceKm.toString()} km` : null,
+                              day.drivingMinutes != null ? `${day.drivingMinutes} min drive` : null,
+                            ].filter(Boolean).join(" · ")}
+                          </p>
+                        )}
                         {day.activities.length > 0 && (
                           <ul>
                             {day.activities.map((a) => (
                               <li className={a.timeLabel ? styles.timedActivity : undefined} key={a.id}>
                                 {a.timeLabel ? <span className={styles.activityTime}>{a.timeLabel}</span> : null}
-                                <span>{a.title}</span>
+                                <span>
+                                  <strong>{a.title}</strong>
+                                  {a.description && <small className={styles.activityDescription}>{a.description}</small>}
+                                </span>
                               </li>
                             ))}
                           </ul>

@@ -1,7 +1,7 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Kaushan_Script } from "next/font/google";
+import { Kaushan_Script, Playfair_Display } from "next/font/google";
 import { ArrowRight, ArrowUpRight, CalendarDays, Check, Compass, Facebook, Headphones, Instagram, MapPin, Plane, Search, ShieldCheck, Star } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import styles from "./home.module.css";
@@ -13,6 +13,16 @@ const script = Kaushan_Script({
   weight: "400",
   display: "swap",
 });
+
+const serif = Playfair_Display({
+  subsets: ["latin"],
+  weight: ["500", "700"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-serif",
+});
+
+const reviewDate = new Intl.DateTimeFormat("en", { month: "short", year: "numeric" });
 
 function formatPrice(amount: number, currency: string) {
   return new Intl.NumberFormat("en", {
@@ -59,6 +69,11 @@ export default async function HomePage() {
 
   const loop = activities.length >= 5; // marquee needs enough cards to fill the width
   const track = loop ? [...activities, ...activities] : activities;
+
+  const reviewCount = approvedReviews.length;
+  const reviewAvg = reviewCount
+    ? approvedReviews.reduce((sum, r) => sum + r.rating, 0) / reviewCount
+    : 0;
 
   return (
     <main>
@@ -415,93 +430,141 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className={styles.reviewsSection} aria-labelledby="reviews-title">
-        <div className={styles.reviewsInner}>
-          <div className={styles.reviewsHeading}>
-            <p>Real journeys. Real travellers.</p>
-            <h2 id="reviews-title">Sri Lanka looks better through their stories.</h2>
-            <span>Discover why couples, families and solo travellers trust us to turn their Sri Lanka plans into unforgettable days.</span>
+      <section className={`${styles.rvSection} ${serif.variable}`} aria-labelledby="reviews-title">
+        <div className={styles.rvInner}>
+          <div className={styles.rvHead}>
+            <p className={styles.rvKicker}>Guest book</p>
+            <h2 id="reviews-title" className={styles.rvTitle}>
+              Postcards from
+              <span className={`${styles.rvScript} ${script.className}`}>happy travellers</span>
+            </h2>
+            <p className={styles.rvLead}>
+              Couples, families and solo explorers share how their days in Sri Lanka unfolded.
+            </p>
           </div>
 
-          <div className={styles.reviewTrust}>
-            <div>
-              <strong>5-star</strong>
-              <span>Guest experiences</span>
-            </div>
-            <div>
-              <strong>100%</strong>
-              <span>Personal planning</span>
-            </div>
-            <div>
-              <strong>Local</strong>
-              <span>Island expertise</span>
-            </div>
-          </div>
-
-          <div className={styles.reviewPlatforms}>
-            <a
-              className={`${styles.reviewPlatform} ${styles.googlePlatform}`}
-              href="https://www.google.com/search?q=Superstar+Travels+Tours+Sri+Lanka+reviews"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Read Superstar Travels Tours reviews on Google"
-            >
-              <span className={styles.platformMark}>G</span>
-              <span><strong>Google</strong><small>View guest reviews</small></span>
-              <ArrowUpRight size={16} aria-hidden="true" />
-            </a>
-            <a
-              className={`${styles.reviewPlatform} ${styles.tripadvisorPlatform}`}
-              href="https://www.tripadvisor.com/Search?q=Superstar+Travels+Tours+Sri+Lanka"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Find Superstar Travels Tours on Tripadvisor"
-            >
-              <span className={styles.platformMark}>T</span>
-              <span><strong>Tripadvisor</strong><small>Explore traveller feedback</small></span>
-              <ArrowUpRight size={16} aria-hidden="true" />
-            </a>
-            <a
-              className={`${styles.reviewPlatform} ${styles.facebookPlatform}`}
-              href="https://www.facebook.com/share/1E9Ba9MP6r/?mibextid=wwXIfr"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Read Superstar Travels Tours reviews on Facebook"
-            >
-              <span className={styles.platformMark}>f</span>
-              <span><strong>Facebook</strong><small>See community stories</small></span>
-              <ArrowUpRight size={16} aria-hidden="true" />
-            </a>
-          </div>
-
-          {approvedReviews.length > 0 ? (
-            <div className={styles.reviewsGrid}>
-              {approvedReviews.map((review) => (
-                <article className={styles.reviewCard} key={review.id}>
-                  <div className={styles.reviewStars} aria-label={`${review.rating} out of 5 stars`}>
-                    {Array.from({ length: 5 }, (_, index) => (
-                      <Star
-                        key={index}
-                        size={15}
-                        fill={index < review.rating ? "currentColor" : "none"}
-                        aria-hidden="true"
-                      />
+          <div className={styles.rvMeta}>
+            {reviewCount > 0 && (
+              <div className={styles.rvScore}>
+                <strong>{reviewAvg.toFixed(1)}</strong>
+                <div>
+                  <div className={styles.rvScoreStars} aria-hidden="true">
+                    {Array.from({ length: 5 }, (_, i) => (
+                      <Star key={i} size={14} fill={i < Math.round(reviewAvg) ? "currentColor" : "none"} />
                     ))}
                   </div>
-                  {review.title && <h3>{review.title}</h3>}
-                  <blockquote>{review.body}</blockquote>
-                  <footer>
-                    <strong>{review.customerName}</strong>
-                    {review.tour?.title && <span>{review.tour.title}</span>}
-                  </footer>
-                </article>
-              ))}
+                  <span>
+                    Average of our latest {reviewCount} review{reviewCount > 1 ? "s" : ""}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <div className={styles.rvPlatforms}>
+              <a
+                className={`${styles.rvPlatform} ${styles.rvGoogle}`}
+                href="https://www.google.com/search?q=Superstar+Travels+Tours+Sri+Lanka+reviews"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Read Superstar Travels Tours reviews on Google (opens in a new tab)"
+              >
+                <span className={styles.rvPlatformMark}>G</span>
+                Google
+                <ArrowUpRight size={15} aria-hidden="true" />
+              </a>
+              <a
+                className={`${styles.rvPlatform} ${styles.rvTrip}`}
+                href="https://www.tripadvisor.com/Search?q=Superstar+Travels+Tours+Sri+Lanka"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Find Superstar Travels Tours on Tripadvisor (opens in a new tab)"
+              >
+                <span className={styles.rvPlatformMark}>T</span>
+                Tripadvisor
+                <ArrowUpRight size={15} aria-hidden="true" />
+              </a>
+              <a
+                className={`${styles.rvPlatform} ${styles.rvFb}`}
+                href="https://www.facebook.com/share/1E9Ba9MP6r/?mibextid=wwXIfr"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Read Superstar Travels Tours reviews on Facebook (opens in a new tab)"
+              >
+                <span className={styles.rvPlatformMark}>f</span>
+                Facebook
+                <ArrowUpRight size={15} aria-hidden="true" />
+              </a>
             </div>
+          </div>
+
+          {reviewCount > 0 ? (
+            <>
+              <div className={styles.rvWall}>
+                {approvedReviews.map((review, index) => (
+                  <article
+                    className={`${styles.rvCard} ${index === 0 ? styles.rvFeatured : ""}`}
+                    key={review.id}
+                  >
+                    <span className={styles.rvPostmark} aria-hidden="true">
+                      Sri Lanka
+                      <br />
+                      {reviewDate.format(review.createdAt)}
+                    </span>
+                    <span className={styles.rvStamp} aria-hidden="true">
+                      <b>{review.rating}</b>
+                      <Star size={12} fill="currentColor" />
+                    </span>
+
+                    <div className={styles.rvTop}>
+                      <div className={styles.rvStars} aria-label={`${review.rating} out of 5 stars`}>
+                        {Array.from({ length: 5 }, (_, i) => (
+                          <Star
+                            key={i}
+                            size={15}
+                            fill={i < review.rating ? "currentColor" : "none"}
+                            aria-hidden="true"
+                          />
+                        ))}
+                      </div>
+                    </div>
+
+                    {review.title && <h3 className={styles.rvCardTitle}>{review.title}</h3>}
+                    <blockquote className={styles.rvText}>{review.body}</blockquote>
+
+                    <footer className={styles.rvFooter}>
+                      <span className={styles.rvAvatar} aria-hidden="true">
+                        {review.customerName.trim().charAt(0).toUpperCase()}
+                      </span>
+                      <span className={styles.rvWho}>
+                        <strong className={script.className}>{review.customerName}</strong>
+                        {review.tour?.title && (
+                          <small>
+                            <MapPin size={12} aria-hidden="true" /> {review.tour.title}
+                          </small>
+                        )}
+                      </span>
+                    </footer>
+                  </article>
+                ))}
+              </div>
+
+              <div className={styles.rvFoot}>
+                <p>Travelled with us?</p>
+                <Link href="/contact">
+                  Plan your own story <ArrowRight size={16} aria-hidden="true" />
+                </Link>
+              </div>
+            </>
           ) : (
-            <div className={styles.reviewEmpty}>
-              <span><Star size={22} fill="currentColor" aria-hidden="true" /></span>
+            <div className={styles.rvEmpty}>
+              <span className={styles.rvEmptyIcon}>
+                <Star size={22} fill="currentColor" aria-hidden="true" />
+              </span>
+              <h3>This postcard is waiting for your story</h3>
               <p>Traveller reviews are coming soon.</p>
-              <Link href="/contact">Plan your own Sri Lanka journey <ArrowRight size={16} /></Link>
+              <Link href="/contact">
+                Plan your own Sri Lanka journey <ArrowRight size={16} aria-hidden="true" />
+              </Link>
             </div>
           )}
         </div>

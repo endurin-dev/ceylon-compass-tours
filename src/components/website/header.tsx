@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { Kaushan_Script } from "next/font/google";
 import {
   ArrowRight,
+  ArrowUpRight,
   Menu,
   X,
   Home,
@@ -24,6 +25,7 @@ import {
 declare global {
   interface Window {
     googleTranslateElementInit?: () => void;
+    googleTranslateWidget?: HTMLElement;
     google?: {
       translate: {
         TranslateElement: new (
@@ -51,6 +53,7 @@ const FACEBOOK_URL = "https://www.facebook.com/";
 const INSTAGRAM_URL = "https://www.instagram.com/";
 
 const PLAN_HREF = "/tour-packages";
+const TRANSLATION_DEFAULT_KEY = "superstar-translation-defaulted";
 
 type NavItem = { label: string; href: string; external?: boolean };
 
@@ -69,6 +72,13 @@ const navLinks: (NavItem & {
 
 function isActive(pathname: string, href: string) {
   return href === "/" ? pathname === "/" : pathname.startsWith(href);
+}
+
+function openTranslateSelector(elementId: string) {
+  document
+    .getElementById(elementId)
+    ?.querySelector<HTMLAnchorElement>(".goog-te-gadget-simple a")
+    ?.click();
 }
 
 function FacebookIcon({ className = "w-5 h-5" }: { className?: string }) {
@@ -153,33 +163,58 @@ export function Header() {
   }, [open]);
 
   useEffect(() => {
-    if (document.getElementById("google-translate-script")) return;
+    if (window.sessionStorage.getItem(TRANSLATION_DEFAULT_KEY) !== "true") {
+      document.cookie = "googtrans=/en/en; path=/; SameSite=Lax";
+      window.sessionStorage.setItem(TRANSLATION_DEFAULT_KEY, "true");
+    }
 
     window.googleTranslateElementInit = () => {
-      if (!window.google?.translate?.TranslateElement) return;
+      const TranslateElement = window.google?.translate?.TranslateElement;
+      if (!TranslateElement) return;
 
-      ["google_translate_element", "google_translate_element_mobile"].forEach((elementId) => {
-        const element = document.getElementById(elementId);
-        if (element && element.childElementCount === 0) {
-          new window.google!.translate.TranslateElement(
-            {
-              pageLanguage: "en",
-              includedLanguages: "en,fr,de,es,ru,ja,zh-CN,ar,ta",
-              layout: 0,
-              autoDisplay: false,
-            },
-            elementId,
-          );
-        }
-      });
+      const desktopTarget = document.getElementById("google_translate_element");
+      const mobileTarget = document.getElementById("google_translate_element_mobile");
+      const target = open ? mobileTarget : desktopTarget;
+      if (!target) return;
+
+      const existingWidget =
+        window.googleTranslateWidget ??
+        desktopTarget?.firstElementChild ??
+        mobileTarget?.firstElementChild;
+      if (existingWidget instanceof HTMLElement) {
+        window.googleTranslateWidget = existingWidget;
+        if (existingWidget.parentElement !== target) target.appendChild(existingWidget);
+        return;
+      }
+
+      new TranslateElement(
+        {
+          pageLanguage: "en",
+          includedLanguages: "en,fr,de,es,ru,ja,zh-CN,ar,ta",
+          layout: 2,
+          autoDisplay: false,
+        },
+        target.id,
+      );
+      if (target.firstElementChild instanceof HTMLElement) {
+        window.googleTranslateWidget = target.firstElementChild;
+      }
     };
 
-    const script = document.createElement("script");
-    script.id = "google-translate-script";
-    script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-    script.async = true;
-    document.head.appendChild(script);
-  }, []);
+    if (window.google?.translate?.TranslateElement) {
+      window.googleTranslateElementInit();
+      return;
+    }
+
+    if (!document.getElementById("google-translate-script")) {
+      const script = document.createElement("script");
+      script.id = "google-translate-script";
+      script.src =
+        "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit&hl=en";
+      script.async = true;
+      document.head.appendChild(script);
+    }
+  }, [open]);
 
   // Round icon buttons: soft backing on the home hero so they never vanish into the photo
   const iconBtn = `flex h-10 w-10 sm:h-11 sm:w-11 items-center justify-center rounded-full text-slate-800 transition-all duration-200 ${
@@ -195,7 +230,7 @@ export function Header() {
             : "sticky top-0 bg-white/90 backdrop-blur-md border-b border-gray-100 shadow-sm"
         }`}
       >
-        <div className="flex items-center justify-between gap-2 px-3 py-3 sm:gap-3 sm:px-6 md:px-12">
+        <div className="flex items-center justify-between gap-2 px-3 py-3 sm:gap-3 sm:px-6 lg:px-5 xl:px-12">
           {/* Brand: hanging tab with logo + company name */}
           <Link
             href="/"
@@ -230,15 +265,24 @@ export function Header() {
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="whitespace-nowrap rounded-full px-2.5 py-2 transition-colors hover:bg-[#E51937] hover:!text-white focus:bg-[#E51937] focus:!text-white focus:outline-none active:!text-white"
+                  aria-label={`${label} (opens in a new tab)`}
+                  className="transport-link group/t relative mx-1 flex items-center gap-1.5 overflow-hidden whitespace-nowrap rounded-full px-3 py-2 !text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5B83D]"
                 >
-                  {label}
+                  <CarFront
+                    className="h-3.5 w-3.5 transition-transform duration-300 group-hover/t:translate-x-0.5"
+                    aria-hidden="true"
+                  />
+                  <span className="relative z-10">{label}</span>
+                  <ArrowUpRight
+                    className="h-3 w-3 opacity-80 transition-transform duration-200 group-hover/t:-translate-y-0.5 group-hover/t:translate-x-0.5"
+                    aria-hidden="true"
+                  />
                 </a>
               ) : (
                 <Link
                   key={href}
                   href={href}
-                  className={`whitespace-nowrap rounded-full px-2.5 py-2 transition-colors hover:bg-[#E51937] hover:!text-white focus:bg-[#E51937] focus:!text-white focus:outline-none active:!text-white ${
+                  className={`whitespace-nowrap rounded-full px-2 py-2 xl:px-2.5 transition-colors hover:bg-[#E51937] hover:!text-white focus:bg-[#E51937] focus:!text-white focus:outline-none active:!text-white ${
                     isActive(pathname, href) ? "bg-[#E51937] !text-white" : ""
                   }`}
                 >
@@ -250,20 +294,29 @@ export function Header() {
 
           {/* Right Actions */}
           <div className="flex items-center gap-1.5 sm:gap-3 md:gap-4">
-            <div className="google-translator hidden items-center md:flex" aria-label="Choose website language">
-              <Languages className="h-4 w-4 text-slate-700" aria-hidden="true" />
-              <span className="text-xs font-semibold text-slate-700">Translate</span>
+            <div
+              className="google-translator hidden items-center gap-1.5 xl:flex"
+              aria-label="Choose website language"
+            >
+              <button
+                type="button"
+                aria-label="Open language selector"
+                onClick={() => openTranslateSelector("google_translate_element")}
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E51937]"
+              >
+                <Languages className="h-4 w-4 text-slate-700" aria-hidden="true" />
+              </button>
               <div id="google_translate_element" />
             </div>
 
             {/* Plan Your Trip: visible on every screen size, right of the brand on mobile */}
             <Link
-  href={PLAN_HREF}
-  className="group/cta flex items-center gap-2 whitespace-nowrap rounded-full bg-[#E51937] px-3.5 py-2.5 text-xs font-semibold !text-white shadow-md transition-all duration-200 hover:bg-red-700 hover:!text-white hover:shadow-lg sm:px-6 sm:text-sm"
->
-  <span className="text-white">Plan Your Trip</span>
-  <ArrowRight className="hidden h-4 w-4 text-white transition-transform group-hover/cta:translate-x-0.5 sm:block" />
-</Link>
+              href={PLAN_HREF}
+              className="group/cta flex min-h-11 items-center gap-1.5 whitespace-nowrap rounded-full bg-[#E51937] px-3 py-2 text-xs font-semibold !text-white shadow-md transition-all duration-200 hover:bg-red-700 hover:!text-white hover:shadow-lg sm:px-4"
+            >
+              <span className="text-white">Plan Your Trip</span>
+              <ArrowRight className="hidden h-3.5 w-3.5 text-white transition-transform group-hover/cta:translate-x-0.5 xl:block" />
+            </Link>
 
             <button
               aria-label="Open menu"
@@ -361,12 +414,14 @@ export function Header() {
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={linkClassName}
+                      aria-label={`${label} (opens in a new tab)`}
+                      className="transport-link group relative flex items-center gap-2.5 overflow-hidden rounded-xl px-2.5 py-1.5 text-sm font-bold !text-white focus:outline-none active:!text-white"
                     >
-                      <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/10 text-white group-hover:bg-white/20">
+                      <span className="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-white/25">
                         <Icon className="h-4 w-4" />
                       </span>
-                      {label}
+                      <span className="relative z-10">{label}</span>
+                      <ArrowUpRight className="relative z-10 ml-auto mr-1 h-4 w-4 opacity-90" aria-hidden="true" />
                     </a>
                   ) : (
                     <Link href={href} className={linkClassName}>
@@ -396,8 +451,18 @@ export function Header() {
             <ArrowRight className="w-5 h-5" />
           </Link>
 
-          <div className="google-translator google-translator-mobile mt-4 flex items-center justify-center gap-2" aria-label="Choose website language">
-            <Languages className="h-4 w-4" aria-hidden="true" />
+          <div
+            className="google-translator google-translator-mobile mt-4 flex items-center justify-center gap-2"
+            aria-label="Choose website language"
+          >
+            <button
+              type="button"
+              aria-label="Open language selector"
+              onClick={() => openTranslateSelector("google_translate_element_mobile")}
+              className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full hover:bg-white/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+            >
+              <Languages className="h-4 w-4" aria-hidden="true" />
+            </button>
             <span className="text-xs font-semibold">Translate</span>
             <div id="google_translate_element_mobile" />
           </div>

@@ -3,6 +3,7 @@
 import { deleteAdminRecord, updateAdminRecord } from "@/actions/admin-record.actions";
 import { DestinationPicker, type DestinationOption } from "@/components/admin/destination-picker";
 import { ImageUrlField } from "@/components/admin/image-url-field";
+import { ItineraryEditor, type ItineraryDayDraft } from "@/components/admin/itinerary-editor";
 import { TourItemPicker, type TourItemOption } from "@/components/admin/tour-item-picker";
 import { Eye, Pencil, Search, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -13,7 +14,7 @@ export type AdminTableRow = Record<string, string>;
 type FieldDefinition = {
   key: string;
   label: string;
-  type?: "text" | "textarea" | "number" | "date" | "select" | "destination-picker" | "tour-items" | "image";
+  type?: "text" | "textarea" | "number" | "date" | "select" | "destination-picker" | "tour-items" | "itinerary" | "image";
   options?: string[];
   wide?: boolean;
   optional?: boolean;
@@ -36,6 +37,7 @@ const editableFields: Record<string, FieldDefinition[]> = {
     { key: "coverImageUrl", label: "Cover image", type: "image", wide: true, optional: true },
     { key: "destinationIds", label: "Destinations and route order", type: "destination-picker", wide: true },
     { key: "experienceIds", label: "Attractions and activities", type: "tour-items", wide: true },
+    { key: "itineraryDays", label: "Day-by-day itinerary", type: "itinerary", wide: true },
   ],
   destinations: [
     { key: "name", label: "Destination" },
@@ -194,6 +196,7 @@ export function DataTable({
     values.destinationIds = JSON.stringify(formData.getAll("destinationIds").map(String));
     values.attractionIds = JSON.stringify(formData.getAll("attractionIds").map(String));
     values.activityIds = JSON.stringify(formData.getAll("activityIds").map(String));
+    values.itineraryDays = String(formData.get("itineraryDays") ?? "[]");
 
     startTransition(async () => {
       const result = await updateAdminRecord(section, selectedRow.id, recordType, values);
@@ -350,6 +353,7 @@ export function DataTable({
                       .filter((field) =>
                         field.type !== "destination-picker" &&
                         field.type !== "tour-items" &&
+                        field.type !== "itinerary" &&
                         !columns.some((column) => column.key === field.key),
                       )
                       .map((field) => ({
@@ -408,6 +412,11 @@ export function DataTable({
                               initialSelectedIds: JSON.parse(getEditValues(selectedRow).activityIds || "[]") as string[],
                             },
                           ]} />
+                        ) : field.type === "itinerary" ? (
+                          <ItineraryEditor
+                            key={`${selectedRow.id}-itinerary`}
+                            initialDays={JSON.parse(value || "[]") as ItineraryDayDraft[]}
+                          />
                         ) : field.type === "image" ? (
                           <ImageUrlField
                             key={`${selectedRow.id}-${field.key}`}

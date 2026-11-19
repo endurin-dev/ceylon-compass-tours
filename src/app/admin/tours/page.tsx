@@ -3,7 +3,6 @@ import { AlertTriangle, CheckCircle2, ChevronRight, FileEdit, Map, Plus, Star } 
 import { DataTable, type AdminTableRow } from "@/components/admin/data-table";
 import { prisma } from "@/lib/prisma";
 
-
 export const dynamic = "force-dynamic";
 
 export default async function ToursAdminPage() {
@@ -21,6 +20,10 @@ export default async function ToursAdminPage() {
         tourActivities: {
           include: { activity: { select: { id: true, name: true } } },
           orderBy: { sortOrder: "asc" },
+        },
+        itineraryDays: {
+          include: { activities: { orderBy: { sortOrder: "asc" } } },
+          orderBy: { dayNumber: "asc" },
         },
       },
       orderBy: [{ featured: "desc" }, { createdAt: "desc" }],
@@ -40,14 +43,18 @@ export default async function ToursAdminPage() {
   const rows: AdminTableRow[] = tours.map((tour) => ({
     id: tour.id,
     title: tour.title,
-    destinations: tour.tourDestinations.map(({ destination }) => destination.name).join(", "),
-    attractions: tour.tourAttractions.map(({ attraction }) => attraction.name).join(", "),
-    activities: tour.tourActivities.map(({ activity }) => activity.name).join(", "),
-    duration: tour.durationLabel ?? `${tour.durationDays} days / ${tour.durationNights} nights`,
-    price: `${tour.currency} ${tour.basePrice.toString()}`,
-    priceVisibility: tour.showPrice ? "Shown" : "Hidden",
+    destinations: tour.tourDestinations.map(({ destination }) => destination.name).join(", ") || "—",
+    includes:
+      [
+        tour.tourAttractions.length ? `${tour.tourAttractions.length} attractions` : "",
+        tour.tourActivities.length ? `${tour.tourActivities.length} activities` : "",
+      ]
+        .filter(Boolean)
+        .join(" · ") || "—",
+    duration: tour.durationLabel ?? `${tour.durationDays}D / ${tour.durationNights}N`,
+    price: `${tour.currency} ${tour.basePrice.toString()}${tour.showPrice ? "" : " (hidden)"}`,
     status: tour.status,
-    featured: tour.featured ? "Yes" : "No",
+    featured: tour.featured ? "★ Yes" : "No",
     __edit: JSON.stringify({
       title: tour.title,
       slug: tour.slug,
@@ -68,17 +75,32 @@ export default async function ToursAdminPage() {
       activityIds: JSON.stringify(tour.tourActivities.map(({ activity }) => activity.id)),
       attractionOptions,
       activityOptions,
+      itineraryDays: JSON.stringify(
+        tour.itineraryDays.map((day) => ({
+          title: day.title,
+          description: day.description,
+          distanceKm: day.distanceKm?.toString() ?? "",
+          drivingMinutes: day.drivingMinutes?.toString() ?? "",
+          overnightAt: day.overnightAt ?? "",
+          accommodation: day.accommodation ?? "",
+          meals: day.meals.join(", "),
+          activities: day.activities.map((activity) => ({
+            timeLabel: activity.timeLabel ?? "",
+            title: activity.title,
+            description: activity.description,
+            imageUrl: activity.imageUrl ?? "",
+          })),
+        }))
+      ),
     }),
   }));
 
   const columns = [
     { key: "title", label: "Tour" },
     { key: "destinations", label: "Destinations" },
-    { key: "attractions", label: "Attractions" },
-    { key: "activities", label: "Activities" },
+    { key: "includes", label: "Includes" },
     { key: "duration", label: "Duration" },
-    { key: "price", label: "Starting price" },
-    { key: "priceVisibility", label: "Public price" },
+    { key: "price", label: "Price" },
     { key: "status", label: "Status" },
     { key: "featured", label: "Featured" },
   ];
@@ -130,8 +152,10 @@ export default async function ToursAdminPage() {
         <div className="ta-alert">
           <AlertTriangle size={18} />
           <span>
-            <b>{placeholderPrices} tour{placeholderPrices > 1 ? "s" : ""}</b> still use the USD 1.00 placeholder
-            price. Set real prices before publishing.
+            <b>
+              {placeholderPrices} tour{placeholderPrices > 1 ? "s" : ""}
+            </b>{" "}
+            still use the USD 1.00 placeholder price. Set real prices before publishing.
           </span>
         </div>
       )}

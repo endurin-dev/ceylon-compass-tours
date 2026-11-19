@@ -3,7 +3,7 @@ import { createTourSchema } from "./tour.validation";
 
 export async function createTour(input: unknown) {
   const data = createTourSchema.parse(input);
-  const { destinationIds, attractionIds, activityIds, ...tourData } = data;
+  const { destinationIds, attractionIds, activityIds, itineraryDays, ...tourData } = data;
   const [destinations, attractions, activities] = await Promise.all([
     prisma.destination.findMany({ where: { id: { in: destinationIds } }, select: { id: true } }),
     prisma.attraction.findMany({ where: { id: { in: attractionIds } }, select: { id: true } }),
@@ -38,6 +38,27 @@ export async function createTour(input: unknown) {
         create: activityIds.map((activityId, sortOrder) => ({
           activityId,
           sortOrder,
+        })),
+      },
+      itineraryDays: {
+        create: itineraryDays.map((day, index) => ({
+          dayNumber: index + 1,
+          title: day.title,
+          description: day.description,
+          distanceKm: day.distanceKm,
+          drivingMinutes: day.drivingMinutes,
+          overnightAt: day.overnightAt || null,
+          accommodation: day.accommodation || null,
+          meals: day.meals,
+          activities: {
+            create: day.activities.map((activity, sortOrder) => ({
+              timeLabel: activity.timeLabel || null,
+              title: activity.title,
+              description: activity.description,
+              imageUrl: activity.imageUrl || null,
+              sortOrder,
+            })),
+          },
         })),
       },
     }

@@ -209,12 +209,14 @@
 .dayBody h3 { margin: 0; font-family: var(--font-body), system-ui, sans-serif; font-size: 1rem; font-weight: 750; letter-spacing: -.02em; color: var(--navy); line-height: 1.3; }
 .overnightTag { display: inline-flex; align-items: center; gap: 5px; padding: 4px 8px; border: 1px solid #f4cbd0; border-radius: 999px; background: #fff5f6; color: #a91020; font-size: .66rem; font-weight: 700; line-height: 1.3; }
 .dayBody p { margin: 0; font-size: 0.85rem; line-height: 1.5; color: var(--muted); }
+.dayBody .dayMeta { margin-top: 8px; color: #738099; font-size: .73rem; font-weight: 650; }
 .dayBody ul { display: grid; gap: 6px; margin: 9px 0 0; padding: 0; list-style: none; font-size: 0.84rem; color: #46536e; line-height: 1.45; }
 .dayBody ul li { position: relative; display: flex; align-items: flex-start; gap: 8px; padding: 2px 0 2px 14px; }
 .dayBody ul li::before { content: ""; position: absolute; left: 1px; top: .76em; width: 6px; height: 6px; border-radius: 50%; background: var(--red); box-shadow: 0 0 0 3px #fdecee; }
 .dayBody ul li > span:last-child { min-width: 0; }
 .activityTime { flex: 0 0 auto; min-width: 58px; color: var(--navy); font-size: .72rem; font-weight: 800; }
 .timedActivity > span:last-child { padding-left: 8px; border-left: 1px solid #e3e7f0; }
+.activityDescription { display: block; margin-top: 3px; color: var(--muted); font-size: .76rem; line-height: 1.45; }
 @media (hover: hover) {
   .dayBody:hover { transform: translateY(-2px); box-shadow: 0 17px 30px -23px rgba(11, 31, 92, .65); }
 }
