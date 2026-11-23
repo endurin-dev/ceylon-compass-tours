@@ -719,6 +719,8 @@
 
 /* ---------- Reviews: postcard guest book ---------- */
 .rvSection {
+  --font-serif: Georgia, "Times New Roman", serif;
+  font-family: Georgia, "Times New Roman", serif;
   position: relative; isolation: isolate; overflow: hidden; padding: 88px 0 96px; color: #102b5c;
   background:
     radial-gradient(circle at 8% 0%, rgba(215, 25, 32, .07), transparent 38%),
@@ -899,4 +901,7 @@
 @media (prefers-reduced-motion: reduce) {
   .rvCard, .rvPlatform, .rvFoot a, .rvEmpty a { transition: none; }
   .rvCard:hover, .rvPlatform:hover { transform: none; }
+}
+.scriptFont {
+  font-family: "Brush Script MT", "Segoe Script", cursive;
 }

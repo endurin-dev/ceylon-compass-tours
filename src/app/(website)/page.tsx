@@ -1,26 +1,11 @@
 import type { CSSProperties } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Kaushan_Script, Playfair_Display } from "next/font/google";
 import { ArrowRight, ArrowUpRight, CalendarDays, Check, Compass, Facebook, Headphones, Instagram, MapPin, Plane, Search, ShieldCheck, Star } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import styles from "./home.module.css";
 
 export const dynamic = "force-dynamic";
-
-const script = Kaushan_Script({
-  subsets: ["latin"],
-  weight: "400",
-  display: "swap",
-});
-
-const serif = Playfair_Display({
-  subsets: ["latin"],
-  weight: ["500", "700"],
-  style: ["normal", "italic"],
-  display: "swap",
-  variable: "--font-serif",
-});
 
 const reviewDate = new Intl.DateTimeFormat("en", { month: "short", year: "numeric" });
 
@@ -144,7 +129,7 @@ export default async function HomePage() {
           </div>
 
           <div className={styles.heroSignature} aria-hidden="true">
-            <span className={script.className}>Sri Lanka</span>
+            <span className={styles.scriptFont}>Sri Lanka</span>
             <small>Explore · Experience · Enjoy</small>
           </div>
         </div>
@@ -161,7 +146,7 @@ export default async function HomePage() {
                   Find your inspiration
                 </p>
                 <h2 className={styles.inspirationTitle}>
-                  Places to <span className={script.className}>fall in love</span> with
+                  Places to <span className={styles.scriptFont}>fall in love</span> with
                 </h2>
               </div>
               <Link href="/destinations" className={styles.inspirationLink}>
@@ -210,7 +195,7 @@ export default async function HomePage() {
                   Things to do
                 </p>
                 <h2 className={styles.thingsTitle}>
-                  Moments worth <span className={script.className}>travelling for</span>
+                  Moments worth <span className={styles.scriptFont}>travelling for</span>
                 </h2>
               </div>
               <Link href="/activities" className={styles.thingsLink}>
@@ -286,7 +271,7 @@ export default async function HomePage() {
                   Made for you
                 </p>
                 <h2 className={styles.toursTitle}>
-                  Explore our <span className={script.className}>tours</span>
+                  Explore our <span className={styles.scriptFont}>tours</span>
                 </h2>
                 <p className={styles.toursIntro}>
                   Ready-made itineraries you can book as they are or shape around your own plans.
@@ -430,13 +415,13 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className={`${styles.rvSection} ${serif.variable}`} aria-labelledby="reviews-title">
+      <section className={styles.rvSection} aria-labelledby="reviews-title">
         <div className={styles.rvInner}>
           <div className={styles.rvHead}>
             <p className={styles.rvKicker}>Guest book</p>
             <h2 id="reviews-title" className={styles.rvTitle}>
               Postcards from
-              <span className={`${styles.rvScript} ${script.className}`}>happy travellers</span>
+              <span className={`${styles.rvScript} ${styles.scriptFont}`}>happy travellers</span>
             </h2>
             <p className={styles.rvLead}>
               Couples, families and solo explorers share how their days in Sri Lanka unfolded.
@@ -536,7 +521,7 @@ export default async function HomePage() {
                         {review.customerName.trim().charAt(0).toUpperCase()}
                       </span>
                       <span className={styles.rvWho}>
-                        <strong className={script.className}>{review.customerName}</strong>
+                        <strong className={styles.scriptFont}>{review.customerName}</strong>
                         {review.tour?.title && (
                           <small>
                             <MapPin size={12} aria-hidden="true" /> {review.tour.title}
