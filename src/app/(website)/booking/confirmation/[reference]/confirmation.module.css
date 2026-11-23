@@ -34,7 +34,7 @@
 .tripMeta span { display: grid; gap: 4px; font-size: .8rem; }
 .tripMeta b { font-size: .77rem; }
 .priceBox { display: grid; grid-template-columns: 1fr auto; gap: 3px 12px; align-items: center; margin-top: 12px; padding: 10px 12px; border-radius: 10px; background: #fff0f1; font-weight: 700; }
-.priceBox strong { color: #d71920; font-size: 1.2rem; }
+.priceBox strong { color: #e66a12; font-size: 1.2rem; }
 .priceBox small { grid-column: 1 / -1; color: #586780; font-size: .7rem; font-weight: 400; }
 .customerDetails { display: grid; gap: 0; margin: 0; }
 .customerDetails > div { display: grid; grid-template-columns: 86px minmax(0, 1fr); gap: 8px; padding: 9px 0; border-bottom: 1px solid #e6ecf5; font-size: .84rem; }
@@ -53,8 +53,8 @@
 .help > span { display: grid; gap: 4px; font-size: .76rem; }
 .help a { color: #102b5c; font-weight: 700; white-space: nowrap; }
 .actions { display: flex; justify-content: center; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
-.actions button, .actions a { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 8px; padding: 0 18px; border: 1px solid #d71920; border-radius: 999px; color: #d71920; background: white; font: inherit; font-size: .82rem; font-weight: 700; cursor: pointer; }
-.actions .download { color: white; background: #d71920; }
+.actions button, .actions a { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 8px; padding: 0 18px; border: 1px solid #e66a12; border-radius: 999px; color: #e66a12; background: white; font: inherit; font-size: .82rem; font-weight: 700; cursor: pointer; }
+.actions .download { color: white; background: #e66a12; }
 @media (max-width: 760px) {
   .page { padding: 18px 14px 36px; }
   .hero { margin: -18px -14px 18px; padding: 30px 14px 20px; }

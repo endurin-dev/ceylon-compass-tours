@@ -18,11 +18,10 @@ import {
 /* ------------------------------------------------------------------ */
 /*  CONFIG – edit these in one place                                   */
 /* ------------------------------------------------------------------ */
-const INSTAGRAM_URL =
-  "https://www.instagram.com/super_startravel?xtok=Zzlscmp4aGdkYXJj&utm_source=qr";
-const FACEBOOK_URL = "https://www.facebook.com/share/1E9Ba9MP6r/?mibextid=wwXIfr";
-const HANDLE = "super_startravel";
-const PAGE_NAME = "Super Star Travel"; // change to the exact Facebook page name
+const INSTAGRAM_URL = "https://www.ceyloncompass.com";
+const FACEBOOK_URL = "https://www.ceyloncompass.com";
+const HANDLE = "ceyloncompass";
+const PAGE_NAME = "Ceylon Compass";
 
 // Add real photos in `image` (e.g. "/posts/ella.jpg"). Without one, a colour tile shows.
 const posts = [
@@ -31,7 +30,7 @@ const posts = [
   { label: "Mirissa", from: "#0E6E8C", to: "#6FD0E0", likes: 312, image: "" },
   { label: "Tea country", from: "#1F5A3A", to: "#7DBE7A", likes: 205, image: "" },
   { label: "Yala safari", from: "#A8501E", to: "#E39A4B", likes: 276, image: "" },
-  { label: "Galle Fort", from: "#B3174D", to: "#F06A93", likes: 334, image: "" },
+  { label: "Galle Fort", from: "#c85a10", to: "#df8615", likes: 334, image: "" },
 ];
 
 const reviews = [
@@ -77,7 +76,7 @@ function InstagramPhone() {
         <div className="overflow-hidden rounded-[2rem] bg-white">
           {/* header */}
           <div className="flex items-center gap-3 px-4 pt-5 pb-3">
-            <div className="rounded-full p-[3px] bg-[conic-gradient(from_200deg,#F2B134,#D81E5B,#7B2CBF,#F2B134)]">
+            <div className="rounded-full p-[3px] bg-[conic-gradient(from_200deg,#df8615,#e66a12,#c85a10,#df8615)]">
               <div className="grid h-14 w-14 place-items-center rounded-full border-[3px] border-white bg-[#062F3A] text-amber-300">
                 <Star className="h-6 w-6 fill-amber-300" />
               </div>
@@ -92,7 +91,7 @@ function InstagramPhone() {
           </div>
 
           <div className="px-4 pb-3">
-            <span className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#D81E5B] py-2 text-sm font-semibold text-white transition-colors group-hover:bg-[#b5154a]">
+            <span className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#e66a12] py-2 text-sm font-semibold text-white transition-colors group-hover:bg-[#c85a10]">
               <Instagram className="h-4 w-4" /> Follow on Instagram
             </span>
           </div>
@@ -228,7 +227,7 @@ export function ReviewsCarousel() {
             </span>
             <div className="flex flex-col justify-between">
               <blockquote className="text-sm leading-relaxed text-slate-700">
-                <span className="mr-1 text-3xl leading-none text-[#D81E5B] font-[family-name:var(--font-script)]">
+                <span className="mr-1 text-3xl leading-none text-[#e66a12] font-[family-name:var(--font-script)]">
                   &ldquo;
                 </span>
                 {r.text}
@@ -244,7 +243,7 @@ export function ReviewsCarousel() {
             </div>
             <span
               className={`absolute right-4 top-4 grid h-6 w-6 place-items-center rounded-full text-white ${
-                r.source === "facebook" ? "bg-[#1877F2]" : "bg-[#D81E5B]"
+                r.source === "facebook" ? "bg-[#1877F2]" : "bg-[#e66a12]"
               }`}
               title={`Posted on ${r.source === "facebook" ? "Facebook" : "Instagram"}`}
             >
@@ -296,7 +295,7 @@ export default function SocialShowcase() {
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-[#D81E5B] px-6 py-3 text-sm font-semibold transition-colors hover:bg-[#b5154a] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300"
+            className="inline-flex items-center gap-2 rounded-full bg-[#e66a12] px-6 py-3 text-sm font-semibold transition-colors hover:bg-[#c85a10] focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-amber-300"
           >
             <Instagram className="h-4 w-4" /> @{HANDLE}
           </a>

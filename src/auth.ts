@@ -25,7 +25,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (adminEmail && adminPassword && email === adminEmail && password === adminPassword) {
           return {
             id: "env-admin",
-            name: "Superstar Admin",
+            name: "Ceylon Compass Admin",
             email,
             role: "SUPER_ADMIN",
           };

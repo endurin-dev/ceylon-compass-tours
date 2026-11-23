@@ -8,7 +8,7 @@ import styles from "./attractions.module.css";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
-  title: "Sri Lanka Attractions | Superstar Travels Tours",
+  title: "Sri Lanka Attractions | Ceylon Compass",
   description:
     "Explore the landmarks, temples, gardens, and scenic places included in our Sri Lanka tour packages.",
 };

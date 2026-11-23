@@ -1,8 +1,8 @@
 /* ───────── Tokens ───────── */
 .page {
-  --red: #d7121c;
-  --red-dark: #b00d16;
-  --red-tint: #fdeeee;
+  --red: #e66a12;
+  --red-dark: #c85a10;
+  --red-tint: #fff0e3;
   --navy: #0d2a5c;
   --navy-deep: #0a1f45;
   --ink: #16213e;
@@ -555,7 +555,7 @@
 .error {
   margin: 0;
   padding: 12px 16px;
-  border: 1px solid #f3b4ba;
+  border: 1px solid #f2bd82;
   border-radius: 10px;
   color: #8f1320;
   background: #fff0f1;

@@ -133,7 +133,7 @@ export default async function AboutPage() {
             island we call home.
           </h1>
           <p>
-            Super Star Travel plans tours across Sri Lanka for travellers who
+            Ceylon Compass plans tours across Sri Lanka for travellers who
             want more than a checklist of sights.
           </p>
           <span className={styles.heroScript} aria-hidden="true">
@@ -168,7 +168,7 @@ export default async function AboutPage() {
               easy to see all of it and still miss what makes it special.
             </p>
             <p>
-              We started Super Star Travel to change that. Our team plans every
+              We started Ceylon Compass to change that. Our team plans every
               route ourselves, so your days leave room for the unplanned
               moments: a roadside cup of tea, a temple ceremony, a view that
               earns a longer stop.
@@ -281,15 +281,6 @@ export default async function AboutPage() {
                       .map((p) => p.number)
                       .join(" · ")}
                   </span>
-                </dd>
-              </div>
-              <div>
-                <dt>
-                  <MapPin size={18} aria-hidden="true" />
-                </dt>
-                <dd>
-                  <strong>France</strong>
-                  <span>{contactDetails.francePhone.number}</span>
                 </dd>
               </div>
               <div>

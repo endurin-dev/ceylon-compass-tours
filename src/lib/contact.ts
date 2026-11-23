@@ -1,14 +1,10 @@
 export const contactDetails = {
   sriLankaPhones: [
-    { label: "Sri Lanka", number: "+94 72 680 3498", href: "+94726803498" },
-    { label: "Sri Lanka", number: "+94 75 667 7163", href: "+94756677163" },
+    { label: "Sri Lanka", number: "+94 71 739 3971", href: "+94717393971" },
   ],
-  francePhone: {
-    label: "France",
-    number: "+33 6 60 97 66 69",
-    href: "+33660976669",
-  },
-  email: "contact@super-star-travel.com",
-  website: "www.superstartravelcabs.com",
-  websiteUrl: "https://www.superstartravelcabs.com",
+  email: "info.ceyloncompasstravels@gmail.com",
+  website: "www.ceyloncompass.com",
+  websiteUrl: "https://www.ceyloncompass.com",
+  russianWebsite: "www.ceyloncompasstravels.ru",
+  russianWebsiteUrl: "https://www.ceyloncompasstravels.ru",
 } as const;

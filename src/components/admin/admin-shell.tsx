@@ -93,7 +93,7 @@ export function AdminShell({
           <Link href="/admin" className="admin-brand" onClick={closeSidebar}>
             <span className="admin-brand-mark">S</span>
             <span>
-              <strong>Superstar</strong>
+              <strong>Ceylon Compass</strong>
               <small>TRAVEL ADMIN</small>
             </span>
           </Link>
@@ -177,7 +177,7 @@ export function AdminShell({
             <Menu size={21} />
           </button>
           <div className="admin-topbar-context">
-            <span>Superstar Travels</span>
+            <span>Ceylon Compass</span>
             <span className="admin-topbar-divider">/</span>
             <strong>Admin workspace</strong>
           </div>

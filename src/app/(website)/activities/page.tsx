@@ -9,7 +9,7 @@ import ActivitiesGrid from "./ActivitiesGrid";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
-  title: "Sri Lanka Activities | Superstar Travels Tours",
+  title: "Sri Lanka Activities | Ceylon Compass",
   description:
     "Discover wildlife, water sports, scenic journeys, and other activities available on our Sri Lanka tours.",
 };

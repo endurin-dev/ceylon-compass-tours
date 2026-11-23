@@ -1,7 +1,7 @@
 .footer {
   --footer-navy: #0b1f49;
   --footer-blue: #102b5c;
-  --footer-red: #e11d2e;
+  --footer-red: #e66a12;
   color: #e7eefb;
   background: var(--footer-navy);
 }
@@ -42,7 +42,7 @@
 
 .topCopy { max-width: 650px; }
 .eyebrow {
-  color: #ffb8bf;
+  color: #df8615;
   font-size: .73rem;
   font-weight: 800;
   letter-spacing: .14em;
@@ -80,8 +80,8 @@
   transition: background .18s ease, transform .18s ease;
 }
 
-.cta:hover { transform: translateY(-2px); background: #c81727; }
-.cta:focus-visible, .footer a:focus-visible { outline: 3px solid #ffc7cc; outline-offset: 3px; }
+.cta:hover { transform: translateY(-2px); background: #c85a10; }
+.cta:focus-visible, .footer a:focus-visible { outline: 3px solid #df8615; outline-offset: 3px; }
 
 .main {
   max-width: 1180px;
@@ -112,7 +112,7 @@
   font-size: .94rem;
   font-weight: 800;
 }
-.linkColumn h3 svg, .contactColumn h3 svg { color: #ff909a; }
+.linkColumn h3 svg, .contactColumn h3 svg { color: #df8615; }
 .linkColumn ul { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
 .linkColumn li a, .contactLink { color: #c4d0e7; font-size: .84rem; transition: color .15s ease; }
 .linkColumn li a:hover, .contactLink:hover { color: white; }
@@ -120,7 +120,7 @@
 .contactColumn > p { margin: 0 0 15px; color: #c4d0e7; font-size: .84rem; line-height: 1.6; }
 .phoneList { display: grid; gap: 10px; }
 .phone { display: inline-flex; align-items: center; gap: 10px; color: white; }
-.phone > svg { color: #ff909a; }
+.phone > svg { color: #df8615; }
 .phone > span { display: grid; gap: 3px; font-size: .95rem; font-weight: 800; }
 .phone small { color: #b7c7e2; font-size: .72rem; font-weight: 500; }
 .email { display: inline-block; margin-top: 12px; color: #d3def2; font-size: .8rem; overflow-wrap: anywhere; }
@@ -137,9 +137,9 @@
   color: #bdcbe2;
   font-size: .8rem;
 }
-.destinationNote > svg { flex: none; color: #ff909a; }
+.destinationNote > svg { flex: none; color: #df8615; }
 .destinationNote a { display: inline-flex; flex: none; align-items: center; gap: 5px; margin-left: auto; color: white; font-weight: 700; }
-.destinationNote a:hover { color: #ffb8bf; }
+.destinationNote a:hover { color: #df8615; }
 
 .bottom {
   display: flex;

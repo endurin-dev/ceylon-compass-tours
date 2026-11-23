@@ -289,7 +289,6 @@ export function BookingForm({ tour, countries, showPrices }: BookingFormProps) {
               {contactDetails.sriLankaPhones.map((phone) => (
                 <a href={`tel:${phone.href}`} key={phone.href}>{phone.number}</a>
               ))}
-              <a href={`tel:${contactDetails.francePhone.href}`}>{contactDetails.francePhone.number} (France)</a>
             </div>
           </div>
         </aside>

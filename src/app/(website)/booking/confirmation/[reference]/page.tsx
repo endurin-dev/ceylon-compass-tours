@@ -86,7 +86,7 @@ export default async function ConfirmationPage({
         <div className={styles.heroContent}>
           <span className={styles.successIcon}><Check size={34} strokeWidth={3} /></span>
           <h1>Booking <span>Request Received!</span></h1>
-          <p>Thank you for choosing Superstar Travels Tours.</p>
+          <p>Thank you for choosing Ceylon Compass.</p>
           <p className={styles.heroNote}>
             Our travel team will review your details and contact you to confirm availability and next steps.
           </p>
@@ -178,7 +178,6 @@ export default async function ConfirmationPage({
             {contactDetails.sriLankaPhones.map((phone) => (
               <a href={`tel:${phone.href}`} key={phone.href}>{phone.number}</a>
             ))}
-            <a href={`tel:${contactDetails.francePhone.href}`}>{contactDetails.francePhone.number} (France)</a>
           </span>
         </div>
       </section>

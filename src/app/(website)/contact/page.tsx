@@ -177,15 +177,6 @@ export default async function ContactPage() {
                   </a>
                 ))}
               </div>
-              <div className={styles.group}>
-                <span className={styles.groupLabel}>France</span>
-                <a
-                  className={styles.link}
-                  href={`tel:${contactDetails.francePhone.href}`}
-                >
-                  {contactDetails.francePhone.number}
-                </a>
-              </div>
             </article>
 
             <article id="email" className={styles.card}>
@@ -220,6 +211,14 @@ export default async function ContactPage() {
                   rel="noreferrer"
                 >
                   {contactDetails.website}
+                </a>
+                <a
+                  className={styles.link}
+                  href={contactDetails.russianWebsiteUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  {contactDetails.russianWebsite}
                 </a>
               </div>
             </article>
@@ -301,15 +300,6 @@ export default async function ContactPage() {
                         .map((p) => p.number)
                         .join(" · ")}
                     </span>
-                  </dd>
-                </div>
-                <div>
-                  <dt>
-                    <MapPin size={18} aria-hidden="true" />
-                  </dt>
-                  <dd>
-                    <strong>France</strong>
-                    <span>{contactDetails.francePhone.number}</span>
                   </dd>
                 </div>
               </dl>

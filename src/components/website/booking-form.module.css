@@ -1,6 +1,6 @@
 .page {
   --navy: #102b5c;
-  --red: #df1628;
+  --red: #e66a12;
   --muted: #4b5b75;
   --line: #b8c5d8;
   min-height: 100vh;
@@ -69,7 +69,7 @@
 .priceDetails h4 { margin-top: 0; }
 .priceDetails p { display: grid; grid-template-columns: 1fr auto auto; gap: 9px; margin: 7px 0; font-size: .78rem; }
 .priceDetails p strong { min-width: 52px; text-align: right; }
-.total { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding: 9px 11px; border-radius: 8px; color: var(--navy); background: #fde4e7; font-weight: 800; }
+.total { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; padding: 9px 11px; border-radius: 8px; color: var(--navy); background: #fff0e3; font-weight: 800; }
 .total strong { color: var(--red); font-size: 1.22rem; }
 .priceDetails small { display: block; margin-top: 6px; color: var(--muted); font-size: .68rem; }
 .help { display: flex; gap: 10px; align-items: center; margin: 0 12px 12px; padding: 11px; border-radius: 10px; color: var(--navy); background: #edf3ff; }
@@ -78,7 +78,7 @@
 .help span { color: #3f4e67; font-size: .72rem; }
 .help a { font-weight: 700; }
 
-.error { margin: 12px 0; padding: 11px 14px; border: 1px solid #f3b4ba; border-radius: 9px; color: #a10f1d; background: #fff0f1; font-size: .87rem; }
+.error { margin: 12px 0; padding: 11px 14px; border: 1px solid #f2bd82; border-radius: 9px; color: #a10f1d; background: #fff0f1; font-size: .87rem; }
 .footer { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .back, .submit { display: inline-flex; min-height: 50px; align-items: center; justify-content: center; gap: 8px; border: 0; border-radius: 999px; padding: 0 19px; font: inherit; font-size: .9rem; font-weight: 800; }
 .back { color: var(--red); background: transparent; }

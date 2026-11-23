@@ -31,16 +31,16 @@ export function Footer() {
     <footer className={styles.footer}>
       <div className={styles.main}>
         <div className={styles.grid}>
-          <section className={styles.brandColumn} aria-label="About Superstar Travels Tours">
+          <section className={styles.brandColumn} aria-label="About Ceylon Compass">
             <Link href="/" className={styles.brand}>
               <Image
                 src="/images/logo.webp"
-                alt="Superstar Travels Tours"
+                alt="Ceylon Compass"
                 width={58}
                 height={58}
                 className={styles.logo}
               />
-              <span>Superstar <b>Travels Tours</b></span>
+              <span>Ceylon <b>Compass</b></span>
             </Link>
             <p className={styles.brandText}>
               Discover Sri Lanka at your own pace—from ancient heritage and misty
@@ -80,14 +80,13 @@ export function Footer() {
                   <span><small>{phone.label}</small>{phone.number}</span>
                 </a>
               ))}
-              <a className={styles.phone} href={`tel:${contactDetails.francePhone.href}`}>
-                <Phone size={16} />
-                <span><small>{contactDetails.francePhone.label}</small>{contactDetails.francePhone.number}</span>
-              </a>
             </div>
             <a className={styles.email} href={`mailto:${contactDetails.email}`}>{contactDetails.email}</a>
             <a className={styles.email} href={contactDetails.websiteUrl} target="_blank" rel="noreferrer">
               {contactDetails.website}
+            </a>
+            <a className={styles.email} href={contactDetails.russianWebsiteUrl} target="_blank" rel="noreferrer">
+              {contactDetails.russianWebsite}
             </a>
             <Link className={styles.contactLink} href="/contact">
               Send us a message <ArrowRight size={15} />
@@ -105,7 +104,7 @@ export function Footer() {
         </div>
 
         <div className={styles.bottom}>
-          <span>© {new Date().getFullYear()} Superstar Travels Tours. All rights reserved.</span>
+          <span>© {new Date().getFullYear()} Ceylon Compass. All rights reserved.</span>
           <span>Made for curious travellers. Inspired by Sri Lanka.</span>
         </div>
       </div>

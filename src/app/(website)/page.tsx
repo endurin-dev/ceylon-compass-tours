@@ -91,11 +91,11 @@ export default async function HomePage() {
           <div className={styles.heroCopy}>
             <p className={styles.eyebrow}>Explore Sri Lanka</p>
             <h1>
-              Discover the
+              Follow your compass
               <br />
-              <span>Pearl</span> of the Indian
+              to the heart of
               <br />
-              Ocean
+              <span>Sri Lanka</span>
             </h1>
             <p className={styles.subtitle}>Unforgettable journeys. Lifelong memories.</p>
 
@@ -406,24 +406,24 @@ export default async function HomePage() {
           <div className={styles.socialLinks}>
             <a
               className={`${styles.socialLink} ${styles.instagramLink}`}
-              href="https://www.instagram.com/super_startravel?xtok=Zzlscmp4aGdkYXJj&utm_source=qr"
+              href="https://www.ceyloncompass.com"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Follow Superstar Travels Tours on Instagram (opens in a new tab)"
+              aria-label="Visit Ceylon Compass on Instagram (opens in a new tab)"
             >
               <span className={styles.socialIcon}><Instagram size={25} aria-hidden="true" /></span>
-              <span><small className={styles.socialLabel}>PHOTO JOURNAL</small><strong>Instagram</strong><small>@super_startravel</small></span>
+              <span><small className={styles.socialLabel}>PHOTO JOURNAL</small><strong>Instagram</strong><small>@ceyloncompass</small></span>
               <ArrowRight size={19} aria-hidden="true" />
             </a>
             <a
               className={`${styles.socialLink} ${styles.facebookLink}`}
-              href="https://www.facebook.com/share/1E9Ba9MP6r/?mibextid=wwXIfr"
+              href="https://www.ceyloncompass.com"
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Follow Superstar Travels Tours on Facebook (opens in a new tab)"
+              aria-label="Visit Ceylon Compass on Facebook (opens in a new tab)"
             >
               <span className={styles.socialIcon}><Facebook size={25} aria-hidden="true" /></span>
-              <span><small className={styles.socialLabel}>TRAVEL COMMUNITY</small><strong>Facebook</strong><small>Superstar Travels Tours</small></span>
+              <span><small className={styles.socialLabel}>TRAVEL COMMUNITY</small><strong>Facebook</strong><small>Ceylon Compass</small></span>
               <ArrowRight size={19} aria-hidden="true" />
             </a>
           </div>
@@ -463,10 +463,10 @@ export default async function HomePage() {
             <div className={styles.rvPlatforms}>
               <a
                 className={`${styles.rvPlatform} ${styles.rvGoogle}`}
-                href="https://www.google.com/search?q=Superstar+Travels+Tours+Sri+Lanka+reviews"
+                href="https://www.google.com/search?q=Ceylon+Compass+Sri+Lanka+reviews"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Read Superstar Travels Tours reviews on Google (opens in a new tab)"
+                aria-label="Read Ceylon Compass reviews on Google (opens in a new tab)"
               >
                 <span className={styles.rvPlatformMark}>G</span>
                 Google
@@ -474,10 +474,10 @@ export default async function HomePage() {
               </a>
               <a
                 className={`${styles.rvPlatform} ${styles.rvTrip}`}
-                href="https://www.tripadvisor.com/Search?q=Superstar+Travels+Tours+Sri+Lanka"
+                href="https://www.tripadvisor.com/Search?q=Ceylon+Compass+Sri+Lanka"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Find Superstar Travels Tours on Tripadvisor (opens in a new tab)"
+                aria-label="Find Ceylon Compass on Tripadvisor (opens in a new tab)"
               >
                 <span className={styles.rvPlatformMark}>T</span>
                 Tripadvisor
@@ -485,10 +485,10 @@ export default async function HomePage() {
               </a>
               <a
                 className={`${styles.rvPlatform} ${styles.rvFb}`}
-                href="https://www.facebook.com/share/1E9Ba9MP6r/?mibextid=wwXIfr"
+                href="https://www.ceyloncompass.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Read Superstar Travels Tours reviews on Facebook (opens in a new tab)"
+                aria-label="Read Ceylon Compass reviews on Facebook (opens in a new tab)"
               >
                 <span className={styles.rvPlatformMark}>f</span>
                 Facebook

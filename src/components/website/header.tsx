@@ -16,7 +16,6 @@ import {
   MapPin,
   Info,
   Phone,
-  Star,
   Waves,
   Languages,
   CarFront,
@@ -53,7 +52,7 @@ const FACEBOOK_URL = "https://www.facebook.com/";
 const INSTAGRAM_URL = "https://www.instagram.com/";
 
 const PLAN_HREF = "/tour-packages";
-const TRANSLATION_DEFAULT_KEY = "superstar-translation-defaulted";
+const TRANSLATION_DEFAULT_KEY = "ceylon-compass-translation-defaulted";
 
 type NavItem = { label: string; href: string; external?: boolean };
 
@@ -65,7 +64,7 @@ const navLinks: (NavItem & {
   { label: "Destinations", href: "/destinations", icon: MapPin },
   { label: "Attractions", href: "/attractions", icon: Landmark },
   { label: "Activities", href: "/activities", icon: Waves },
-  { label: "Transport", href: "https://www.superstartravelcabs.com", external: true, icon: CarFront },
+  { label: "Transport", href: "https://www.ceyloncompasstravels.ru", external: true, icon: CarFront },
   { label: "About Us", href: "/about", icon: Info },
   { label: "Contact", href: "/contact", icon: Phone },
 ];
@@ -108,22 +107,19 @@ function InstagramIcon({ className = "w-5 h-5" }: { className?: string }) {
   );
 }
 
-/** Company name in script lettering: "Super Star" with a small star, "Travel" beneath. */
+/** Company name in script lettering. */
 function BrandName({ tone = "light" }: { tone?: "light" | "dark" }) {
   return (
     <span className="flex flex-col leading-none">
       <span
         className={`${script.className} flex items-center gap-1 pr-1 text-[1.05rem] sm:text-2xl ${
           tone === "light"
-            ? "bg-gradient-to-r from-[#E51937] via-[#E51937] to-[#0D2A5C] bg-clip-text text-transparent"
+            ? "bg-gradient-to-r from-[#e66a12] via-[#df8615] to-[#e66a12] bg-clip-text text-transparent"
             : "text-white"
         }`}
       >
-        Super Star
-        <Star
-          aria-hidden="true"
-          className="h-3 w-3 shrink-0 fill-[#F5B83D] text-[#F5B83D] transition-transform duration-500 group-hover:rotate-[72deg] sm:h-3.5 sm:w-3.5"
-        />
+        Ceylon
+
       </span>
       <span
         className={`mt-0.5 flex items-center gap-1.5 text-[0.6rem] font-bold tracking-[0.32em] sm:text-[0.68rem] ${
@@ -131,7 +127,7 @@ function BrandName({ tone = "light" }: { tone?: "light" | "dark" }) {
         }`}
       >
         <i aria-hidden="true" className="block h-px w-3 bg-current opacity-60 sm:w-5" />
-        Travel
+        Compass
       </span>
     </span>
   );
@@ -234,11 +230,11 @@ export function Header() {
           {/* Brand: hanging tab with logo + company name */}
           <Link
             href="/"
-            aria-label="Super Star Travel – Home"
-            className="group relative z-10 -mt-3 flex shrink-0 items-center gap-2 self-start rounded-b-2xl border-b-[3px] border-[#E51937]
+            aria-label="Ceylon Compass – Home"
+            className="group relative z-10 -mt-3 flex shrink-0 items-center gap-2 self-start rounded-b-2xl border-b-[3px] border-[#e66a12]
               bg-white px-2.5 pb-1.5 pt-2.5 shadow-[0_8px_20px_-8px_rgba(0,0,0,0.35)]
-              transition-all duration-300 ease-out hover:shadow-[0_12px_24px_-8px_rgba(229,25,55,0.45)]
-              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E51937] focus-visible:ring-offset-2
+              transition-all duration-300 ease-out hover:shadow-[0_12px_24px_-8px_rgba(13,42,92,0.45)]
+              focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D2A5C] focus-visible:ring-offset-2
               sm:gap-3 sm:px-4 md:px-5"
           >
             <Image
@@ -266,7 +262,7 @@ export function Header() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${label} (opens in a new tab)`}
-                  className="transport-link group/t relative mx-1 flex items-center gap-1.5 overflow-hidden whitespace-nowrap rounded-full px-3 py-2 !text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F5B83D]"
+                  className="transport-link group/t relative mx-1 flex items-center gap-1.5 overflow-hidden whitespace-nowrap rounded-full px-3 py-2 !text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-[#df8615]"
                 >
                   <CarFront
                     className="h-3.5 w-3.5 transition-transform duration-300 group-hover/t:translate-x-0.5"
@@ -282,8 +278,8 @@ export function Header() {
                 <Link
                   key={href}
                   href={href}
-                  className={`whitespace-nowrap rounded-full px-2 py-2 xl:px-2.5 transition-colors hover:bg-[#E51937] hover:!text-white focus:bg-[#E51937] focus:!text-white focus:outline-none active:!text-white ${
-                    isActive(pathname, href) ? "bg-[#E51937] !text-white" : ""
+                  className={`whitespace-nowrap rounded-full px-2 py-2 xl:px-2.5 transition-colors hover:bg-[#e66a12] hover:!text-white focus:bg-[#e66a12] focus:!text-white focus:outline-none active:!text-white ${
+                    isActive(pathname, href) ? "bg-[#e66a12] !text-white" : ""
                   }`}
                 >
                   {label}
@@ -302,7 +298,7 @@ export function Header() {
                 type="button"
                 aria-label="Open language selector"
                 onClick={() => openTranslateSelector("google_translate_element")}
-                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#E51937]"
+                className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#0D2A5C]"
               >
                 <Languages className="h-4 w-4 text-slate-700" aria-hidden="true" />
               </button>
@@ -312,7 +308,7 @@ export function Header() {
             {/* Plan Your Trip: visible on every screen size, right of the brand on mobile */}
             <Link
               href={PLAN_HREF}
-              className="group/cta flex min-h-11 items-center gap-1.5 whitespace-nowrap rounded-full bg-[#E51937] px-3 py-2 text-xs font-semibold !text-white shadow-md transition-all duration-200 hover:bg-red-700 hover:!text-white hover:shadow-lg sm:px-4"
+              className="group/cta flex min-h-11 items-center gap-1.5 whitespace-nowrap rounded-full bg-[#e66a12] px-3 py-2 text-xs font-semibold !text-white shadow-md transition-all duration-200 hover:bg-[#c85a10] hover:!text-white hover:shadow-lg sm:px-4"
             >
               <span className="text-white">Plan Your Trip</span>
               <ArrowRight className="hidden h-3.5 w-3.5 text-white transition-transform group-hover/cta:translate-x-0.5 xl:block" />
@@ -323,7 +319,7 @@ export function Header() {
               aria-expanded={open}
               aria-controls="mobile-menu"
               onClick={() => setOpen(true)}
-              className={`lg:hidden ${iconBtn} hover:text-red-600`}
+              className={`lg:hidden ${iconBtn} hover:text-[#0D2A5C]`}
             >
               <Menu className="w-6 h-6" />
             </button>
@@ -359,14 +355,14 @@ export function Header() {
         </svg>
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -bottom-28 -left-24 h-72 w-72 rounded-full bg-[#E51937]/30 blur-3xl"
+          className="pointer-events-none absolute -bottom-28 -left-24 h-72 w-72 rounded-full bg-[#df8615]/30 blur-3xl"
         />
 
         {/* Top bar */}
         <div className="relative z-10 flex items-center justify-between px-4 py-3 sm:px-6">
           <Link
             href="/"
-            aria-label="Super Star Travel – Home"
+            aria-label="Ceylon Compass – Home"
             className="group flex items-center gap-3"
           >
             <span className="rounded-2xl bg-white px-3 py-2 shadow-lg">
@@ -427,7 +423,7 @@ export function Header() {
                     <Link href={href} className={linkClassName}>
                       <span
                         className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-lg text-white ${
-                          active ? "bg-[#E51937]" : "bg-white/10 group-hover:bg-white/20"
+                          active ? "bg-[#e66a12] !text-white" : "bg-white/10 group-hover:bg-white/20"
                         }`}
                       >
                         <Icon className="h-4 w-4" />
@@ -445,7 +441,7 @@ export function Header() {
         <div className="relative z-10 px-5 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-3">
           <Link
             href={PLAN_HREF}
-            className="flex min-h-14 items-center justify-center gap-2 rounded-full bg-[#E51937] text-base font-semibold text-white shadow-[0_10px_30px_-8px_rgba(229,25,55,0.7)] active:bg-red-700"
+            className="flex min-h-14 items-center justify-center gap-2 rounded-full bg-[#e66a12] text-base font-semibold !text-white shadow-[0_10px_30px_-8px_rgba(230,106,18,0.7)] active:bg-[#c85a10]"
           >
             Plan Your Trip
             <ArrowRight className="w-5 h-5" />
@@ -473,7 +469,7 @@ export function Header() {
               href={FACEBOOK_URL}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Super Star Travel on Facebook"
+              aria-label="Ceylon Compass on Facebook"
               className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white active:bg-white/25"
             >
               <FacebookIcon />
@@ -482,7 +478,7 @@ export function Header() {
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Super Star Travel on Instagram"
+              aria-label="Ceylon Compass on Instagram"
               className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/10 text-white active:bg-white/25"
             >
               <InstagramIcon />

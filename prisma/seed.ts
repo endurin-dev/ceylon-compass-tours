@@ -1035,7 +1035,7 @@ async function seedCompleteTourPackages(destinationIds: Map<string, string>) {
         durationDays: tour.durationDays,
         durationNights: tour.durationNights,
         durationLabel: tour.durationLabel,
-        seoTitle: `${tour.title} | Super Star Travel`,
+        seoTitle: `${tour.title} | Ceylon Compass`,
         seoDescription: tour.shortDescription,
       },
       create: {
@@ -1051,7 +1051,7 @@ async function seedCompleteTourPackages(destinationIds: Map<string, string>) {
         featured: false,
         basePrice: 1,
         currency: "USD",
-        seoTitle: `${tour.title} | Super Star Travel`,
+        seoTitle: `${tour.title} | Ceylon Compass`,
         seoDescription: tour.shortDescription,
       },
     });
@@ -1167,7 +1167,7 @@ async function main() {
   for (const user of [
     {
       id: "seed-user-admin",
-      name: "Super Star Travel Admin",
+      name: "Ceylon Compass Admin",
       email: "admin@example.com",
       role: UserRole.SUPER_ADMIN,
     },
@@ -1215,7 +1215,7 @@ async function main() {
         featured: tour.featured,
         basePrice: tour.basePrice,
         currency: "USD",
-        seoTitle: `${tour.title} | Super Star Travel`,
+        seoTitle: `${tour.title} | Ceylon Compass`,
         seoDescription: tour.shortDescription,
       },
       create: {
@@ -1230,7 +1230,7 @@ async function main() {
         featured: tour.featured,
         basePrice: tour.basePrice,
         currency: "USD",
-        seoTitle: `${tour.title} | Super Star Travel`,
+        seoTitle: `${tour.title} | Ceylon Compass`,
         seoDescription: tour.shortDescription,
       },
     });
@@ -1757,7 +1757,7 @@ async function main() {
       id: "seed-setting-brand",
       key: "brand",
       value: {
-        name: "Super Star Travel",
+        name: "Ceylon Compass",
         tagline: "Discover the Pearl of the Indian Ocean",
         country: "Sri Lanka",
         currency: "USD",
@@ -1767,8 +1767,8 @@ async function main() {
       id: "seed-setting-contact",
       key: "contact",
       value: {
-        email: "hello@superstartravel.example",
-        phone: "+94 11 234 5678",
+        email: "info.ceyloncompasstravels@gmail.com",
+        phone: "+94 71 739 3971",
         address: "Colombo, Sri Lanka",
         officeHours: "Monday to Saturday, 09:00-17:00 Sri Lanka time",
       },
@@ -1777,8 +1777,8 @@ async function main() {
       id: "seed-setting-social",
       key: "social",
       value: {
-        facebook: "https://www.facebook.com/",
-        instagram: "https://www.instagram.com/",
+        facebook: "https://www.ceyloncompass.com",
+        instagram: "https://www.ceyloncompass.com",
       },
     },
     {
