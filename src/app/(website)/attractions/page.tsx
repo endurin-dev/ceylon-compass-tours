@@ -93,7 +93,7 @@ export default async function AttractionsPage() {
               </div>
               <div className={styles.text}>
                 <h2>{a.name}</h2>
-                <p>{a.description && <p>{a.description}</p>}
+                {a.description && <p>{a.description}</p>}
                 <Link href="/tour-packages" className={styles.textLink}>
                   See tours that visit {a.name}
                   <ArrowRight size={16} aria-hidden="true" />

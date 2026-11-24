@@ -96,7 +96,7 @@ export default function AttractionsGrid({
 
             <div className={styles.sheetText}>
               <h2 id="attraction-title">{a.name}</h2>
-              <p>{a.description && <p>{a.description}</p>}
+              {a.description && <p>{a.description}</p>}
               <Link href="/tour-packages" className={styles.btn}>
                 See tours that visit <ArrowRight size={18} aria-hidden="true" />
               </Link>
