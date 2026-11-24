@@ -8,10 +8,41 @@ import styles from "./attractions.module.css";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
-  title: "Sri Lanka Attractions | Ceylon Compass",
+  title: "Best Places to Visit in Sri Lanka | Attractions & Landmarks",
   description:
-    "Explore the landmarks, temples, gardens, and scenic places included in our Sri Lanka tour packages.",
-};
+    "Discover the best places to visit in Sri Lanka. Explore ancient landmarks, historic temples, beautiful gardens, cultural attractions and scenic locations with Ceylon Compass.",
+
+  alternates: {
+    canonical: "/attractions",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Ceylon Compass",
+    title: "Best Places to Visit in Sri Lanka | Ceylon Compass",
+    description:
+      "Explore Sri Lanka's famous landmarks, ancient temples, cultural attractions and beautiful scenic places with Ceylon Compass.",
+    url: "/attractions",
+
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Best Places to Visit in Sri Lanka | Ceylon Compass",
+    description:
+      "Discover Sri Lanka's famous landmarks, temples, cultural attractions and scenic destinations.",
+  },
+};;
 
 const display = Newsreader({
   subsets: ["latin"],
@@ -62,7 +93,7 @@ export default async function AttractionsPage() {
               </div>
               <div className={styles.text}>
                 <h2>{a.name}</h2>
-                <p>{a.description || "More details coming soon."}</p>
+                <p>{a.description && <p>{a.description}</p>}
                 <Link href="/tour-packages" className={styles.textLink}>
                   See tours that visit {a.name}
                   <ArrowRight size={16} aria-hidden="true" />

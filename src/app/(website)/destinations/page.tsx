@@ -4,8 +4,48 @@ import { Plus_Jakarta_Sans, Kaushan_Script } from "next/font/google";
 import { ArrowRight, Compass, MapPin } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import styles from "./destinations.module.css";
+import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
+
+
+export const metadata: Metadata = {
+  title: "Sri Lanka Destinations | Best Places to Visit",
+  description:
+    "Discover the best places to visit in Sri Lanka with Ceylon Compass. Explore ancient cities, beautiful beaches, misty mountains, wildlife destinations and cultural attractions.",
+
+  alternates: {
+    canonical: "/destinations",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+
+openGraph: {
+  type: "website",
+  locale: "en_US",
+  siteName: "Ceylon Compass",
+  title: "Explore Sri Lanka Destinations | Ceylon Compass",
+  description:
+    "Discover Sri Lanka's most beautiful destinations, from ancient cities and scenic hill country to tropical beaches and wildlife experiences.",
+  url: "/destinations",
+  images: [
+    {
+      url: "/images/og-image.jpg",
+      width: 1200,
+      height: 630,
+      alt: "Explore Sri Lanka destinations with Ceylon Compass",
+    },
+  ],
+},
+};
+
 
 const body = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -117,9 +157,9 @@ export default async function DestinationsPage() {
                       {String(index + 1).padStart(2, "0")}
                     </span>
                     <h2>{destination.name}</h2>
-                    <p>
-                      {destination.description || "More details coming soon."}
-                    </p>
+                   {destination.description && (
+  <p>{destination.description}</p>
+)}
                     <Link
                       href="/tour-packages"
                       className={styles.stopLink}

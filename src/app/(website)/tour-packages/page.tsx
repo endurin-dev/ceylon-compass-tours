@@ -99,28 +99,78 @@ function buildHref(f: SearchParams, overrides: Partial<Record<keyof SearchParams
   return qs ? `/tour-packages?${qs}` : "/tour-packages";
 }
 
+
 export async function generateMetadata({
   searchParams,
 }: {
   searchParams: Promise<SearchParams>;
 }): Promise<Metadata> {
   const f = await searchParams;
-  const filtered = Boolean(f.q || f.destination || f.duration || f.price || f.sort);
+
+  const hasFilters = Boolean(
+    f.q || f.destination || f.duration || f.price || f.sort
+  );
+
+  const currentPage = Math.max(
+    1,
+    Number.parseInt(f.page ?? "1", 10) || 1
+  );
+
+  const canonicalUrl =
+    !hasFilters && currentPage > 1
+      ? `/tour-packages?page=${currentPage}`
+      : "/tour-packages";
+
+  const title =
+    "Sri Lanka Tour Packages | Private Tours & Holiday Packages";
+
+  const description =
+    "Discover Sri Lanka with Ceylon Compass. Explore private tours, cultural journeys, beach holidays, wildlife safaris and unforgettable Sri Lanka tour packages. Find your perfect island adventure.";
+
   return {
-    title: "Sri Lanka Tour Packages | Book Your Perfect Tour",
-    description:
-      "Find and book the perfect Sri Lanka tour: cultural, beach, wildlife and hill country packages. Filter by destination, duration and price.",
-    alternates: { canonical: "/tour-packages" },
-    robots: filtered ? { index: false, follow: true } : { index: true, follow: true },
+    title,
+    description,
+
+    alternates: {
+      canonical: canonicalUrl,
+    },
+
+    robots: hasFilters
+      ? {
+          index: false,
+          follow: true,
+        }
+      : {
+          index: true,
+          follow: true,
+        },
+
     openGraph: {
       type: "website",
-      title: "Sri Lanka Tour Packages",
-      description: "Find and book the perfect tour for your Sri Lankan adventure.",
-      url: "/tour-packages",
+      locale: "en_US",
+      url: canonicalUrl,
+      siteName: "Ceylon Compass",
+      title: "Sri Lanka Tour Packages | Ceylon Compass",
+      description,
+      images: [
+        {
+          url: "/images/og-image.jpg",
+          width: 1200,
+          height: 630,
+          alt: "Explore Sri Lanka with Ceylon Compass",
+        },
+      ],
     },
-    twitter: { card: "summary_large_image" },
+
+    twitter: {
+      card: "summary_large_image",
+      title: "Sri Lanka Tour Packages | Ceylon Compass",
+      description,
+      images: ["/images/og-image.jpg"],
+    },
   };
 }
+
 
 /* ---------- small inline icons ---------- */
 const Icon = {

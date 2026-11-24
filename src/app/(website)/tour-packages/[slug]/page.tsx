@@ -50,6 +50,7 @@ async function getTour(slug: string) {
   });
 }
 
+
 export async function generateMetadata({
   params,
 }: {
@@ -57,25 +58,80 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const tour = await getTour(slug);
-  if (!tour) return { title: "Tour not found" };
 
-  const image = tour.heroImageUrl ?? tour.coverImageUrl ?? tour.images[0]?.url ?? FALLBACK_IMAGE;
-  const description = (tour.shortDescription ?? tour.description ?? "").replace(/\s+/g, " ").slice(0, 155);
+  if (!tour) {
+    return {
+      title: "Tour Not Found",
+      robots: {
+        index: false,
+        follow: false,
+      },
+    };
+  }
+
+  const image =
+    tour.heroImageUrl ??
+    tour.coverImageUrl ??
+    tour.images[0]?.url ??
+    FALLBACK_IMAGE;
+
+  const rawDescription =
+    tour.shortDescription ??
+    tour.description ??
+    `Explore ${tour.title}, one of the Sri Lanka travel experiences offered by Ceylon Compass.`;
+
+  const description = rawDescription
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, 155);
+
+  const title = `${tour.title} | ${tour.durationLabel ?? `${tour.durationDays}-Day`} Sri Lanka Tour`;
+
+  const canonical = `/tour-packages/${tour.slug}`;
 
   return {
-    title: `${tour.title} | ${tour.durationLabel ?? `${tour.durationDays}-Day`} Sri Lanka Tour`,
+    title,
     description,
-    alternates: { canonical: `/tour-packages/${tour.slug}` },
+
+    alternates: {
+      canonical,
+    },
+
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+      },
+    },
+
     openGraph: {
       type: "website",
-      title: tour.title,
+      locale: "en_US",
+      siteName: "Ceylon Compass",
+      title,
       description,
-      url: `/tour-packages/${tour.slug}`,
-      images: [{ url: image }],
+      url: canonical,
+      images: [
+        {
+          url: image,
+          width: 1200,
+          height: 630,
+          alt: `${tour.title} - Sri Lanka tour by Ceylon Compass`,
+        },
+      ],
     },
-    twitter: { card: "summary_large_image", title: tour.title, description, images: [image] },
+
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [image],
+    },
   };
 }
+
 
 const I = {
   pin: <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11Z" /><circle cx="12" cy="10" r="2.5" /></svg>,
@@ -141,32 +197,59 @@ export default async function TourDetailPage({
     similar.length ? { id: "similar", label: "Similar Tours" } : null,
   ].filter((t): t is { id: string; label: string } => t !== null);
 
+ 
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
       {
         "@type": "BreadcrumbList",
         itemListElement: [
-          { "@type": "ListItem", position: 1, name: "Home", item: `${SITE_URL}/` },
-          { "@type": "ListItem", position: 2, name: "Tour Packages", item: `${SITE_URL}/tour-packages` },
-          { "@type": "ListItem", position: 3, name: tour.title, item: `${SITE_URL}/tour-packages/${tour.slug}` },
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Home",
+            item: `${SITE_URL}/`,
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Tour Packages",
+            item: `${SITE_URL}/tour-packages`,
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: tour.title,
+            item: `${SITE_URL}/tour-packages/${tour.slug}`,
+          },
         ],
       },
       {
         "@type": "TouristTrip",
         name: tour.title,
         description: intro,
-        image: imageUrl,
+        image: imageUrl.startsWith("http")
+          ? imageUrl
+          : `${SITE_URL}${imageUrl}`,
         url: `${SITE_URL}/tour-packages/${tour.slug}`,
         touristType: "Leisure",
         itinerary: {
           "@type": "ItemList",
-          itemListElement: tour.itineraryDays.map((d) => ({
+          itemListElement: tour.itineraryDays.map((day) => ({
             "@type": "ListItem",
-            position: d.dayNumber,
-            name: `Day ${d.dayNumber}: ${d.title}`,
+            position: day.dayNumber,
+            name: `Day ${day.dayNumber}: ${day.title}`,
+            description: day.description || undefined,
           })),
         },
+        ...(destinations.length > 0
+          ? {
+              touristDestination: destinations.map((destination) => ({
+                "@type": "TouristDestination",
+                name: destination.name,
+              })),
+            }
+          : {}),
         ...(showPrices
           ? {
               offers: {
@@ -181,6 +264,7 @@ export default async function TourDetailPage({
       },
     ],
   };
+
 
   return (
     <main className={`${styles.page} ${body.variable} ${script.variable}`}>
