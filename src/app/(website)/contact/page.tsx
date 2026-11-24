@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Plus_Jakarta_Sans, Kaushan_Script } from "next/font/google";
 import {
@@ -52,6 +53,51 @@ const steps = [
 ];
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "Contact Ceylon Compass | Plan Your Sri Lanka Tour",
+  description:
+    "Contact Ceylon Compass to plan your Sri Lanka holiday. Enquire about private tours, tour packages, custom itineraries, transport, local guides and travel arrangements.",
+
+  alternates: {
+    canonical: "/contact",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Ceylon Compass",
+    title: "Contact Ceylon Compass | Plan Your Sri Lanka Journey",
+    description:
+      "Get in touch with Ceylon Compass to discuss Sri Lanka tour packages, custom itineraries and your upcoming holiday.",
+    url: "/contact",
+    images: [
+      {
+        url: "/images/activity-web-banner.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Contact Ceylon Compass for Sri Lanka travel planning",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Ceylon Compass | Sri Lanka Travel",
+    description:
+      "Talk to our team about Sri Lanka tours, private itineraries and travel arrangements.",
+    images: ["/images/activity-web-banner.jpg"],
+  },
+};
 
 export default async function ContactPage() {
   const primaryPhone = contactDetails.sriLankaPhones[0];

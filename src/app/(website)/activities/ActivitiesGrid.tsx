@@ -84,7 +84,11 @@ export default function ActivitiesGrid({
               <span className={styles.body}>
                 <span className={styles.cardName}>{a.name}</span>
                 <span className={styles.cardDesc}>
-                  {a.description || "More details coming soon."}
+                  {a.description && (
+  <span className={styles.cardDesc}>
+    {a.description}
+  </span>
+)}
                 </span>
                 <span className={styles.more}>
                   See tours

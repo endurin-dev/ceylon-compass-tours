@@ -1,4 +1,5 @@
 import Image from "next/image";
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Plus_Jakarta_Sans, Kaushan_Script } from "next/font/google";
 import {
@@ -97,6 +98,51 @@ const places = [
 ] as const;
 
 export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: "About Ceylon Compass | Sri Lanka Travel & Tour Experts",
+  description:
+    "Get to know Ceylon Compass, your Sri Lanka travel planning team. Discover our tour packages, private itineraries, local guides, transport services and passion for creating memorable island journeys.",
+
+  alternates: {
+    canonical: "/about",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Ceylon Compass",
+    title: "About Ceylon Compass | Discover Sri Lanka With Us",
+    description:
+      "Meet the team behind Ceylon Compass. We create memorable Sri Lanka holidays with private tours, local guides and personalised travel experiences.",
+    url: "/about",
+    images: [
+      {
+        url: "/images/activity-web-banner.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Ceylon Compass Sri Lanka travel experiences",
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "About Ceylon Compass | Sri Lanka Travel",
+    description:
+      "Discover the people and passion behind Ceylon Compass and our Sri Lanka travel experiences.",
+    images: ["/images/activity-web-banner.jpg"],
+  },
+};
 
 export default async function AboutPage() {
   const destinations = await prisma.destination.findMany({

@@ -9,9 +9,41 @@ import ActivitiesGrid from "./ActivitiesGrid";
 
 export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
-  title: "Sri Lanka Activities | Ceylon Compass",
+  title: "Things to Do in Sri Lanka | Activities & Experiences",
   description:
-    "Discover wildlife, water sports, scenic journeys, and other activities available on our Sri Lanka tours.",
+    "Discover the best things to do in Sri Lanka with Ceylon Compass. Enjoy wildlife safaris, surfing, scenic train journeys, hiking, cultural experiences and unforgettable island adventures.",
+
+  alternates: {
+    canonical: "/activities",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    siteName: "Ceylon Compass",
+    title: "Things to Do in Sri Lanka | Activities & Experiences",
+    description:
+      "Explore exciting Sri Lanka activities, including wildlife safaris, water sports, scenic journeys, hiking and cultural experiences.",
+    url: "/activities",
+    
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "Things to Do in Sri Lanka | Ceylon Compass",
+    description:
+      "Discover wildlife safaris, water sports, scenic journeys and unforgettable experiences in Sri Lanka.",
+
+  },
 };
 
 const body = Plus_Jakarta_Sans({
